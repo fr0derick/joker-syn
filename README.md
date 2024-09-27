@@ -55,3 +55,9 @@ Frontend and backend need to run simultaneously
 - Not sure how this would look on other resolutions from 2560x1440
 - grid element sometimes clips with the column divider when hovering over it
 - could probably set width to some factor of vw as well 
+
+# To Do
+
+- replace grid elements with joker card images
+- add more animations to grid elements to reflect balatro style
+- add balatro swirl background 
