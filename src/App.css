@@ -1,0 +1,97 @@
+html, body, #root, .App {
+  height: auto;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.App {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90vw;
+  height: auto;
+  max-width: 1920px;
+  max-height: 80vh;
+  text-align: center;
+  border: 2px solid black;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Grid layout for jokers in both sections */
+.joker-grid,
+.find-joker-grid,
+.synergy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Creating a responsive grid */
+  gap: 20px;
+  justify-items: start;
+  align-content: start;
+  overflow-y: auto
+}
+
+/* Center the "No jokers" and "Synergetic jokers here" text */
+.no-jokers-message,
+.synergetic-jokers-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the container takes the full height */
+  font-size: 18px; /* Adjust font size if needed */
+  text-align: center; /* Center the text itself */
+}
+
+/* Scrollable grid for "Find Jokers" */
+.find-joker-grid {
+  overflow-y: auto;
+}
+
+/* Scrollable grid for "Synergetic Jokers" */
+.synergy-grid {
+  overflow-y: auto;
+}
+
+/* Fixed-size Joker Cards for all sections */
+.joker-card,
+.synergy-card {
+  border: 1px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 150px; /* Fixing the size */
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+/* Hover effect for Joker and Synergy cards */
+.joker-card:hover,
+.synergy-card:hover {
+  transform: scale(1.05);
+}
+
+/* Smaller text for synergy information */
+.synergy-info {
+  font-size: 12px;
+  margin-top: 5px; /* Smaller font and spacing for synergy information */
+}
