@@ -53,4 +53,5 @@ Frontend and backend need to run simultaneously
 - Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
 
 - Not sure how this would look on other resolutions from 2560x1440
-- grid element sometimes clips with the column divider when hovering over it 
+- grid element sometimes clips with the column divider when hovering over it
+- could probably set width to some factor of vw as well 
