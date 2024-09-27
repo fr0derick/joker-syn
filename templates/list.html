@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker Synergies Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .input-box, .filter-box {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        .list-container {
+            margin-top: 20px;
+        }
+        .joker-item {
+            margin-bottom: 10px;
+            cursor: pointer;
+            position: relative;
+            display: block; /* Force each item to be on a new line */
+        }
+        .hover-box {
+            display: none;
+            position: absolute;
+            left: 10%;  /* Aligns the hover box to the right of the joker text */
+            top: 0;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 5px;
+            z-index: 100;
+            white-space: nowrap;
+        }
+        .joker-item:hover .hover-box {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Joker Synergies Finder</h1>
+
+<div>
+    <label for="jokerInput">Enter Jokers (one per line):</label><br>
+    <textarea id="jokerInput" class="input-box" placeholder="Enter one joker per line"></textarea>
+</div>
+
+<div>
+    <label for="jokerFilter">Filter Jokers (one per line):</label><br>
+    <textarea id="jokerFilter" class="filter-box" placeholder="Enter one joker per line"></textarea>
+</div>
+
+<div class="list-container" id="jokerList"></div>
+
+<script>
+    async function findSynergies() {
+        const jokerInput = document.getElementById('jokerInput').value.trim().split('\n').map(j => j.trim()).filter(Boolean);
+        const jokerFilter = document.getElementById('jokerFilter').value.trim().toLowerCase();  // Make filter lowercase
+        const synergyResults = {};
+
+        // Send input to the backend for synergy calculations
+        const response = await fetch('/find_synergies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                jokers: jokerInput
+            }),
+        });
+
+        const synergyData = await response.json();
+
+        // Filter results if a filter is provided
+        const filteredResults = Object.keys(synergyData).filter(joker => {
+            return joker.toLowerCase().startsWith(jokerFilter);
+        });
+
+        // Sort results: first by number of synergies, then alphabetically
+        filteredResults.sort((a, b) => {
+            const countDiff = synergyData[b].count - synergyData[a].count;
+            return countDiff === 0 ? a.localeCompare(b) : countDiff;
+        });
+
+        // Render the results
+        const jokerList = document.getElementById('jokerList');
+        jokerList.innerHTML = '';
+        filteredResults.forEach(joker => {
+            const synergyInfo = synergyData[joker];
+            const listItem = document.createElement('div');
+            listItem.className = 'joker-item';
+            listItem.innerHTML = `${joker} [${synergyInfo.count}]`;
+
+            // Add hover box to show which jokers this synergizes with
+            const hoverBox = document.createElement('div');
+            hoverBox.className = 'hover-box';
+            hoverBox.innerHTML = `Synergizes with: ${synergyInfo.synergizedWith.join(', ')}`;
+            listItem.appendChild(hoverBox);
+
+            // Append the joker to the list
+            jokerList.appendChild(listItem);
+        });
+    }
+
+    // Attach event listeners to both text areas to trigger search dynamically
+    document.getElementById('jokerInput').addEventListener('input', findSynergies);
+    document.getElementById('jokerFilter').addEventListener('input', findSynergies);
+
+    // Optionally: Trigger an initial search on page load
+    findSynergies();
+</script>
+
+</body>
+</html>
