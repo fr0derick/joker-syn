@@ -49,7 +49,7 @@ Frontend and backend need to run simultaneously
 # Known Issues
 
 - code is very bloated and definitely could do with a clean up
-- some jokers (eg The Duo, the Trio) will be listed as synergies, which needs to be fixed
+- some jokers that are part of a collection of jokers will be listed as potential synergies, which is incorrect (ie the family, the duo, the trio)
 - Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
 
 - Not sure how this would look on other resolutions from 2560x1440
