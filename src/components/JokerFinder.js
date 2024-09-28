@@ -114,7 +114,11 @@ const JokerFinder = () => {
               )
               .sort((a, b) => synergyData[b].count - synergyData[a].count)
               .map((joker, index) => (
-                <div key={index} className="synergy-card">
+                <div
+                  key={index}
+                  className="synergy-card"
+                  onClick={() => addJokerToCollection(joker)}  // Add joker to collection on click
+                >
                   {joker} [{synergyData[joker].count}]
                   <div className="synergy-info">
                     Synergizes with: {synergyData[joker].synergizedWith.join(', ')}
