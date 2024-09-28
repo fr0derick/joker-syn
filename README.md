@@ -20,6 +20,7 @@ point for joker data and synergies
 
 #### react
 
+- tailwindcss
 - react-dom
 - react-router-dom
 - framer-motion 
@@ -63,18 +64,21 @@ Frontend and backend need to run simultaneously
 
 - code is very bloated and definitely could do with a clean up
 - some jokers that are part of a collection of jokers will be listed as potential synergies, which is incorrect (ie the family, the duo, the trio)
+  - implemented database management to correct this and other issues
 - Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
-
+- drag and drop animations are inconsistent
 - Not sure how this would look on other resolutions from 2560x1440
 - grid element sometimes clips with the column divider when hovering over it
 - could probably set width to some factor of vw as well 
+- adding 2 or more of the same joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
 
 # To Do
 
 - replace grid elements with joker card images
-- add more animations to grid elements to reflect balatro style
+- ~~add more animations to grid elements to reflect balatro style~~
+  - added animations with great customizability, but they sometimes bug, I think because there's conflicts with `framer motion` and `hello-pangea/dnd` 
 - add balatro swirl background
-- **Look more into tailwindcss and framer motion libraries and introduce better UI**
+- Introduce better UI
 - maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
 - ~~drag and drop to rearrange Your Jokers panel~~
 - ~~sort joker search panel alphabetically~~
