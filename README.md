@@ -73,4 +73,6 @@ Frontend and backend need to run simultaneously
 - replace grid elements with joker card images
 - add more animations to grid elements to reflect balatro style
 - add balatro swirl background
-- **Look more into tailwindcss and framer motion libraries and introduce better UI
+- **Look more into tailwindcss and framer motion libraries and introduce better UI**
+- maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
+- ^ will require ability to drag jokers around in the **Your Jokers** panel
