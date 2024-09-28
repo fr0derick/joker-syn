@@ -39,7 +39,7 @@ body {
   gap: 20px;
   justify-items: start;
   align-content: start;
-  overflow-y: auto
+  overflow-y: auto;
 }
 
 /* Center the "No jokers" and "Synergetic jokers here" text */
