@@ -11,10 +11,17 @@ Filters the best Jokers based on what you already have
 backend provides API en
 point for joker data and synergies
 
-#### modules
+### modules
+
+#### python
 
 - flask
 - flask-cors
+
+#### react
+
+- react-dom
+- react-router-dom
 
 
 #### backend
