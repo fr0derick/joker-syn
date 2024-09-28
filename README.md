@@ -72,4 +72,5 @@ Frontend and backend need to run simultaneously
 
 - replace grid elements with joker card images
 - add more animations to grid elements to reflect balatro style
-- add balatro swirl background 
+- add balatro swirl background
+- **Look more into tailwindcss and framer motion libraries and introduce better UI
