@@ -76,5 +76,7 @@ Frontend and backend need to run simultaneously
 - **Look more into tailwindcss and framer motion libraries and introduce better UI**
 - maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
 - ^ will require ability to drag jokers around in the **Your Jokers** panel
-- sort joker search panel alphabetically
+- ~~sort joker search panel alphabetically~~
 - show stats for each joker on hover or right 
+
+
