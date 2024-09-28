@@ -29,6 +29,8 @@ point for joker data and synergies
 Need to run list-app.py (backend) alongside frontend,
 
 serves synergies at `http://localhost:5000`.
+manage connections at `http://localhost:5000/dev-tools`
+
 ### 2. Frontend
 
 
