@@ -55,6 +55,9 @@ Frontend and backend need to run simultaneously
 ![image](https://github.com/user-attachments/assets/dc418071-0d7c-4699-9694-f5d9798f8195)
 
 
+![image](https://github.com/user-attachments/assets/e7965ef5-0805-4133-8ad5-f4a6808c1055)
+
+
 # Known Issues
 
 - code is very bloated and definitely could do with a clean up
