@@ -1,87 +1,70 @@
-# joker-syn
-Filters the best Jokers based on what you already have 
+# Getting Started with Create React App
 
-## Requirements
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-- Python 
-- Node.js & npm
+## Available Scripts
 
+In the project directory, you can run:
 
-### backend
-backend provides API en
-point for joker data and synergies
+### `npm start`
 
-### modules
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-#### python
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-- flask
-- flask-cors
+### `npm test`
 
-#### react
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- tailwindcss
-- react-dom
-- react-router-dom
-- framer-motion 
-- @hello-pangea/dnd
+### `npm run build`
 
-#### backend
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Need to run list-app.py (backend) alongside frontend,
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-serves synergies at `http://localhost:5000`.
-manage connections at `http://localhost:5000/dev-tools`
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### 2. Frontend
+### `npm run eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-#### modules
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-idk what modules but to install modules
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-```
-npm install
-``` 
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-#### running the frontend
-to run frontend
-```
-npm start
-```
+## Learn More
 
-then navigate to `http://localhost:3000` in your web browser
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-Frontend and backend need to run simultaneously
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-![image](https://github.com/user-attachments/assets/dc418071-0d7c-4699-9694-f5d9798f8195)
+### Code Splitting
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-![image](https://github.com/user-attachments/assets/e7965ef5-0805-4133-8ad5-f4a6808c1055)
+### Analyzing the Bundle Size
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-# Known Issues
+### Making a Progressive Web App
 
-- code is very bloated and definitely could do with a clean up
-- some jokers that are part of a collection of jokers will be listed as potential synergies, which is incorrect (ie the family, the duo, the trio)
-  - implemented database management to correct this and other issues
-- Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
-- drag and drop animations are inconsistent
-- Not sure how this would look on other resolutions from 2560x1440
-- grid element sometimes clips with the column divider when hovering over it
-- could probably set width to some factor of vw as well 
-- adding 2 or more of the same joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-# To Do
+### Advanced Configuration
 
-- replace grid elements with joker card images
-- ~~add more animations to grid elements to reflect balatro style~~
-  - added animations with great customizability, but they sometimes bug, I think because there's conflicts with `framer motion` and `hello-pangea/dnd` 
-- add balatro swirl background
-- Introduce better UI
-- maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
-- ~~drag and drop to rearrange Your Jokers panel~~
-- ~~sort joker search panel alphabetically~~
-- show stats for each joker on hover or right 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
+### Deployment
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

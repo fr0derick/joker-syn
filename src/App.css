@@ -9,7 +9,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 .App {
@@ -30,8 +29,16 @@ body {
   flex-direction: column;
 }
 
-/* Grid layout for jokers in both sections */
-.joker-grid,
+/* Updated: Joker grid uses flexbox for drag-and-drop support */
+.joker-grid {
+  display: flex;
+  gap: 20px;
+  justify-items: start;
+  align-content: start;
+  overflow-y: auto;
+}
+
+/* Grid layout for other sections */
 .find-joker-grid,
 .synergy-grid {
   display: grid;
@@ -45,7 +52,7 @@ body {
 /* Center the "No jokers" and "Synergetic jokers here" text */
 .no-jokers-message,
 .synergetic-jokers-message {
-  display: flex;
+  display: center;
   justify-content: center;
   align-items: center;
   height: 100%; /* Ensure the container takes the full height */
