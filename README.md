@@ -22,7 +22,8 @@ point for joker data and synergies
 
 - react-dom
 - react-router-dom
-
+- framer-motion 
+- react-beautiful-dnd
 
 #### backend
 
