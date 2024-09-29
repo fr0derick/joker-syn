@@ -75,7 +75,8 @@ Frontend and backend need to run simultaneously
 
 # To Do
 
-- replace grid elements with joker card images
+- ~~replace grid elements with joker card images~~
+- make jokers overlap each other like in Balatro when you have too many jokers
 - ~~add more animations to grid elements to reflect balatro style~~
   - added animations with great customizability, but they sometimes bug, I think because there's conflicts with `framer motion` and `hello-pangea/dnd` 
 - add balatro swirl background
