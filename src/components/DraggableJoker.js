@@ -1,7 +1,9 @@
-// DraggableJoker.js
+// src/components/DraggableJoker.js
 import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
+import JokerCard from './JokerCard';
 
 const DraggableJoker = ({ jokerObj, index, removeJokerFromCollection }) => {
   // Define variants for motion
@@ -47,12 +49,21 @@ const DraggableJoker = ({ jokerObj, index, removeJokerFromCollection }) => {
               willChange: 'transform, opacity',
             }}
           >
-            {jokerObj.name}
+            <JokerCard name={jokerObj.name} /> {/* Use JokerCard component */}
           </motion.div>
         </div>
       )}
     </Draggable>
   );
+};
+
+DraggableJoker.propTypes = {
+  jokerObj: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  removeJokerFromCollection: PropTypes.func.isRequired,
 };
 
 export default DraggableJoker;

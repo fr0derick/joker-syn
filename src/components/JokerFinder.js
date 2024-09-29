@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import DraggableJoker from './DraggableJoker'; // Ensure the correct import path for DraggableJoker
+import JokerCard from './JokerCard'; // Import the JokerCard component
 
 const JokerFinder = () => {
   const [allJokers, setAllJokers] = useState([]);
@@ -9,6 +10,8 @@ const JokerFinder = () => {
   const [ownedJokers, setOwnedJokers] = useState([]);
   const [synergyData, setSynergyData] = useState({});
   const [nextJokerId, setNextJokerId] = useState(0);
+  const [isOverlapping, setIsOverlapping] = useState(false); // New state to manage overlap
+  const jokerGridRef = useRef(null); // Reference to the container
 
   // Fetch all jokers from the backend (TXT file)
   useEffect(() => {
@@ -74,6 +77,22 @@ const JokerFinder = () => {
     setOwnedJokers(ownedJokers.filter((joker) => joker.id !== jokerId));
   };
 
+  // Dynamic overlap logic
+  useEffect(() => {
+    const container = jokerGridRef.current;
+    if (container) {
+      const totalCardWidth = Array.from(container.children).reduce((total, card) => {
+        return total + card.offsetWidth;
+      }, 0);
+
+      if (totalCardWidth > container.offsetWidth) {
+        setIsOverlapping(true);
+      } else {
+        setIsOverlapping(false);
+      }
+    }
+  }, [ownedJokers]);
+
   // Sort synergetic jokers by most synergies and alphabetically
   const sortedSynergisticJokers = Object.keys(synergyData)
     .sort((a, b) => {
@@ -99,9 +118,12 @@ const JokerFinder = () => {
           <Droppable droppableId="ownedJokers" direction="horizontal">
             {(provided) => (
               <div
-                className="joker-grid flex flex-wrap gap-4"
+                className={`joker-grid ${isOverlapping ? 'overlap' : ''}`} // Apply overlap class conditionally
                 {...provided.droppableProps}
-                ref={provided.innerRef}
+                ref={(el) => {
+                  provided.innerRef(el);
+                  jokerGridRef.current = el; // Assign the ref
+                }}
               >
                 {ownedJokers.length > 0 ? (
                   ownedJokers.map((jokerObj, index) => (
@@ -136,7 +158,8 @@ const JokerFinder = () => {
               .filter((joker) =>
                 joker.name.toLowerCase().startsWith(jokerInput.toLowerCase())
               )
-              .map((joker, index) => (
+              .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically
+              .map((joker) => (
                 <div
                   key={joker.id}
                   className="joker-card bg-white p-4 rounded shadow mb-2 cursor-pointer"
@@ -149,7 +172,7 @@ const JokerFinder = () => {
                     setOwnedJokers([...ownedJokers, newJoker]);
                   }}
                 >
-                  {joker.name}
+                  <JokerCard name={joker.name} /> {/* Use JokerCard to display image or fallback text */}
                 </div>
               ))}
           </div>
@@ -172,20 +195,27 @@ const JokerFinder = () => {
               .filter((joker) =>
                 joker.toLowerCase().startsWith(jokerFilter.toLowerCase())
               )
-              .map((joker, index) => (
-                <div
-                  key={joker} // Assuming joker names are unique
-                  className="synergy-card bg-white p-4 rounded shadow mb-2 cursor-pointer"
-                  onClick={() =>
-                    setOwnedJokers([...ownedJokers, { id: `joker-${nextJokerId}`, name: joker }])
-                  }
-                >
-                  {joker} [{synergyData[joker].count}]
-                  <div className="synergy-info text-sm text-gray-600">
-                    Synergizes with: {synergyData[joker].synergizedWith.join(', ')}
+              .map((joker) => {
+                // Get the list of jokers it synergizes with in "Your Jokers"
+                const synergizedWith = synergyData[joker].synergizedWith.filter((synergyJoker) =>
+                  ownedJokers.some((owned) => owned.name === synergyJoker)
+                );
+
+                return (
+                  <div
+                    key={joker} // Assuming joker names are unique
+                    className="synergy-card bg-white p-4 rounded shadow mb-2 cursor-pointer"
+                    onClick={() =>
+                      setOwnedJokers([...ownedJokers, { id: `joker-${nextJokerId}`, name: joker }])
+                    }
+                  >
+                    <JokerCard name={joker} /> {/* Display JokerCard with synergy info */}
+                    <div className="synergy-info text-sm text-gray-600">
+                      Synergizes with: {synergizedWith.length} ({synergizedWith.join(', ')}) {/* Count and list of synergies */}
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
           ) : (
             <div className="synergetic-jokers-message">Synergetic jokers shown here</div>
           )}
@@ -196,3 +226,4 @@ const JokerFinder = () => {
 };
 
 export default JokerFinder;
+
