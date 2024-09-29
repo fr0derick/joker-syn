@@ -71,7 +71,7 @@ Frontend and backend need to run simultaneously
 - Not sure how this would look on other resolutions from 2560x1440
 - grid element sometimes clips with the column divider when hovering over it
 - could probably set width to some factor of vw as well 
-- adding 2 or more of the same joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
+- adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
 
 # To Do
 
