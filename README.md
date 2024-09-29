@@ -54,7 +54,8 @@ then navigate to `http://localhost:3000` in your web browser
 
 Frontend and backend need to run simultaneously
 
-![image](https://github.com/user-attachments/assets/dc418071-0d7c-4699-9694-f5d9798f8195)
+![image](https://github.com/user-attachments/assets/9bc6b0cf-f7a3-492d-b4fc-0319a46c2cc1)
+
 
 
 ![image](https://github.com/user-attachments/assets/e7965ef5-0805-4133-8ad5-f4a6808c1055)
