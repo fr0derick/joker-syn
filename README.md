@@ -63,14 +63,11 @@ Frontend and backend need to run simultaneously
 
 # Known Issues
 
-- code is very bloated and definitely could do with a clean up
-- some jokers that are part of a collection of jokers will be listed as potential synergies, which is incorrect (ie the family, the duo, the trio)
-  - implemented database management to correct this and other issues
+- animation code has a lot of conflicts
+- managing synergies needs to be vice versa
 - Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
 - drag and drop animations are inconsistent
 - Not sure how this would look on other resolutions from 2560x1440
-- grid element sometimes clips with the column divider when hovering over it
-- could probably set width to some factor of vw as well 
 - adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
 
 # To Do
