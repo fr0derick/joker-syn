@@ -26,7 +26,9 @@ point for joker data and synergies
 - framer-motion 
 - @hello-pangea/dnd
 - dotenv
-- 
+- cors
+- express
+- sqlite3
 #### backend
 
 Need to run list-app.py (backend) alongside frontend,
