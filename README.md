@@ -13,11 +13,6 @@ point for joker data and synergies
 
 ### modules
 
-#### python
-
-- flask
-- flask-cors
-
 #### react
 
 - tailwindcss
@@ -31,16 +26,10 @@ point for joker data and synergies
 - sqlite3
 #### backend
 
-Need to run list-app.py (backend) alongside frontend,
+Need to run server.js (backend) alongside frontend,
 
-serves synergies at `http://localhost:5000`.
-manage connections at `http://localhost:5000/dev-tools`
-
-### UPDATE: moved backend to server.js
-still need backend and frontend simultaneously. 
-
-### 2. Frontend
-
+serves synergies at `http://localhost:3000`.
+manage connections at `http://localhost:3000/dev-tools`
 
 #### modules
 
@@ -69,20 +58,19 @@ Frontend and backend need to run simultaneously
 
 # Known Issues
 
-- animation code has a lot of conflicts
-- managing synergies needs to be vice versa
+- ~~animation code has a lot of conflicts~~
+- ~~managing synergies needs to be vice versa~~
 - Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
-- drag and drop animations are inconsistent
+- ~~drag and drop animations are inconsistent~~
 - Not sure how this would look on other resolutions from 2560x1440
-- adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
-- drag and drop visual is fucked. you can still drag and drop, but the joker your dragging now goes invisible
+- ~~adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers~~
+- ~~drag and drop visual is fucked. you can still drag and drop, but the joker your dragging now goes invisible~~
 
 # To Do
 
 - ~~replace grid elements with joker card images~~
 - ~~make jokers overlap each other like in Balatro when you have too many jokers~~
-- ~~add more animations to grid elements to reflect balatro style~~
-  - added animations with great customizability, but they sometimes bug, I think because there's conflicts with `framer motion` and `hello-pangea/dnd` 
+- ~~add more animations to grid elements to reflect balatro style~~ - not reflecting balatro style but its something
 - add balatro swirl background
 - Introduce better UI
 - maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
@@ -90,4 +78,3 @@ Frontend and backend need to run simultaneously
 - ~~sort joker search panel alphabetically~~
 - show stats for each joker on hover or right 
 
-- **stop accidentally uploading the README of react**
