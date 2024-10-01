@@ -1,7 +1,24 @@
+// src/components/JokerFinder.js
+
 import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import DraggableJoker from './DraggableJoker'; // Ensure the correct import path for DraggableJoker
-import JokerCard from './JokerCard'; // Import the JokerCard component
+import DraggableJoker from './DraggableJoker';
+import JokerCard from './JokerCard';
+
+// Define a fixed color palette for synergy dots
+const SYNERGY_COLOR_PALETTE = [
+  '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FF8F33', '#8F33FF',
+  '#33FFF6', '#FF3333', '#33FF8F', '#338FFF'
+];
+
+const getColorFromString = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const colorIndex = Math.abs(hash) % SYNERGY_COLOR_PALETTE.length;
+  return SYNERGY_COLOR_PALETTE[colorIndex];
+};
 
 const JokerFinder = () => {
   const [allJokers, setAllJokers] = useState([]);
@@ -10,8 +27,13 @@ const JokerFinder = () => {
   const [ownedJokers, setOwnedJokers] = useState([]);
   const [synergyData, setSynergyData] = useState({});
   const [nextJokerId, setNextJokerId] = useState(0);
-  const [isOverlapping, setIsOverlapping] = useState(false); // New state to manage overlap
-  const jokerGridRef = useRef(null); // Reference to the container
+  const [isOverlapping, setIsOverlapping] = useState(false);
+  const jokerGridRef = useRef(null);
+  const [overlapPerCard, setOverlapPerCard] = useState(0);
+  const [jokerColors, setJokerColors] = useState({}); // Store synergy colors for jokers
+
+  const CARD_WIDTH = 140;
+  const CARD_HEIGHT = 150;
 
   // Fetch all jokers from the backend (TXT file)
   useEffect(() => {
@@ -22,21 +44,20 @@ const JokerFinder = () => {
           throw new Error('Failed to fetch jokers');
         }
         const data = await response.json();
-        // Assign unique IDs to all jokers
         const jokersWithIds = data.map((joker, idx) => ({
           name: joker,
           id: `joker-${nextJokerId + idx}`,
         }));
         setAllJokers(jokersWithIds);
-        setNextJokerId((prev) => prev + jokersWithIds.length); // Increment the ID counter
+        setNextJokerId((prev) => prev + jokersWithIds.length);
       } catch (error) {
         console.error('Error fetching jokers:', error);
       }
     };
     loadJokers();
-  }, []); // Run only once on mount
+  }, []);
 
-  // Fetch synergies when owned jokers change
+  // Fetch synergies and assign colors when owned jokers change
   useEffect(() => {
     if (ownedJokers.length > 0) {
       const findSynergies = async () => {
@@ -51,6 +72,18 @@ const JokerFinder = () => {
           }
           const data = await response.json();
           setSynergyData(data);
+
+          // Assign synergy colors
+          const colors = {};
+          Object.keys(data).forEach((jokerName) => {
+            const synergizedWith = data[jokerName].synergizedWith || [];
+            colors[jokerName] = synergizedWith.map((synergyJoker) =>
+              getColorFromString([jokerName, synergyJoker].sort().join('-'))
+            );
+          });
+
+          setJokerColors(colors); // Map of joker names to arrays of colors
+
         } catch (error) {
           console.error('Error fetching synergies:', error);
         }
@@ -58,6 +91,7 @@ const JokerFinder = () => {
       findSynergies();
     } else {
       setSynergyData({});
+      setJokerColors({});
     }
   }, [ownedJokers]);
 
@@ -80,16 +114,23 @@ const JokerFinder = () => {
   // Dynamic overlap logic
   useEffect(() => {
     const container = jokerGridRef.current;
-    if (container) {
-      const totalCardWidth = Array.from(container.children).reduce((total, card) => {
-        return total + card.offsetWidth;
-      }, 0);
+    if (container && ownedJokers.length > 0) {
+      const containerWidth = container.clientWidth;
+      const totalCards = ownedJokers.length;
+      let newOverlapPerCard = 0;
 
-      if (totalCardWidth > container.offsetWidth) {
-        setIsOverlapping(true);
-      } else {
-        setIsOverlapping(false);
+      const cardTotalWidth = totalCards * CARD_WIDTH;
+
+      if (cardTotalWidth > containerWidth) {
+        newOverlapPerCard = (cardTotalWidth - containerWidth) / (totalCards - 1);
+        newOverlapPerCard = Math.max(0, newOverlapPerCard);
       }
+
+      setOverlapPerCard(newOverlapPerCard);
+      setIsOverlapping(newOverlapPerCard > 0);
+    } else {
+      setOverlapPerCard(0);
+      setIsOverlapping(false);
     }
   }, [ownedJokers]);
 
@@ -106,23 +147,26 @@ const JokerFinder = () => {
 
   return (
     <div className="flex h-full bg-gray-100 p-8 min-h-0">
-      {/* Left Column: All Jokers */}
       <div className="w-1/2 p-4 border-r-4 border-gray-300 flex flex-col min-h-0">
         <h2 className="text-2xl font-bold mb-4">Your Jokers</h2>
 
-        {/* Drag and drop context */}
-        <DragDropContext 
-          onDragEnd={handleOnDragEnd}
-          dropAnimation={{ duration: 0 }}
-        >
+        <DragDropContext onDragEnd={handleOnDragEnd} dropAnimation={{ duration: 0 }}>
           <Droppable droppableId="ownedJokers" direction="horizontal">
             {(provided) => (
               <div
-                className={`joker-grid ${isOverlapping ? 'overlap' : ''}`} // Apply overlap class conditionally
+                className={`joker-grid ${isOverlapping ? 'overlap' : ''}`}
                 {...provided.droppableProps}
                 ref={(el) => {
                   provided.innerRef(el);
-                  jokerGridRef.current = el; // Assign the ref
+                  jokerGridRef.current = el;
+                }}
+                style={{
+                  display: 'flex',
+                  flexWrap: 'nowrap',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  alignItems: 'flex-start',
+                  minHeight: `${CARD_HEIGHT + 60}px`,
                 }}
               >
                 {ownedJokers.length > 0 ? (
@@ -132,6 +176,11 @@ const JokerFinder = () => {
                       jokerObj={jokerObj}
                       index={index}
                       removeJokerFromCollection={removeJokerFromCollection}
+                      overlapPerCard={overlapPerCard}
+                      isFirst={index === 0}
+                      synergyColors={jokerColors[jokerObj.name] || []} // Pass array of colors
+                      cardWidth={CARD_WIDTH}
+                      cardBorderWidth={0} // No border
                     />
                   ))
                 ) : (
@@ -143,7 +192,6 @@ const JokerFinder = () => {
           </Droppable>
         </DragDropContext>
 
-        {/* Search for Joker Section */}
         <div className="mt-6 flex flex-col flex-1 min-h-0">
           <h2 className="text-lg font-semibold mb-2">Search for Joker</h2>
           <input
@@ -155,10 +203,8 @@ const JokerFinder = () => {
           />
           <div className="find-joker-grid mt-4 flex-1 overflow-auto">
             {allJokers
-              .filter((joker) =>
-                joker.name.toLowerCase().startsWith(jokerInput.toLowerCase())
-              )
-              .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically
+              .filter((joker) => joker.name.toLowerCase().startsWith(jokerInput.toLowerCase()))
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map((joker) => (
                 <div
                   key={joker.id}
@@ -172,14 +218,13 @@ const JokerFinder = () => {
                     setOwnedJokers([...ownedJokers, newJoker]);
                   }}
                 >
-                  <JokerCard name={joker.name} /> {/* Use JokerCard to display image or fallback text */}
+                  <JokerCard name={joker.name} />
                 </div>
               ))}
           </div>
         </div>
       </div>
 
-      {/* Right Column: Synergetic Jokers */}
       <div className="w-1/2 p-4 flex flex-col min-h-0">
         <h2 className="text-2xl font-bold mb-4">Synergetic Jokers</h2>
         <input
@@ -192,26 +237,23 @@ const JokerFinder = () => {
         <div className="synergy-grid flex-1 overflow-auto">
           {sortedSynergisticJokers.length > 0 ? (
             sortedSynergisticJokers
-              .filter((joker) =>
-                joker.toLowerCase().startsWith(jokerFilter.toLowerCase())
-              )
+              .filter((joker) => joker.toLowerCase().startsWith(jokerFilter.toLowerCase()))
               .map((joker) => {
-                // Get the list of jokers it synergizes with in "Your Jokers"
                 const synergizedWith = synergyData[joker].synergizedWith.filter((synergyJoker) =>
                   ownedJokers.some((owned) => owned.name === synergyJoker)
                 );
 
                 return (
                   <div
-                    key={joker} // Assuming joker names are unique
+                    key={joker}
                     className="synergy-card bg-white p-4 rounded shadow mb-2 cursor-pointer"
                     onClick={() =>
                       setOwnedJokers([...ownedJokers, { id: `joker-${nextJokerId}`, name: joker }])
                     }
                   >
-                    <JokerCard name={joker} /> {/* Display JokerCard with synergy info */}
+                    <JokerCard name={joker} />
                     <div className="synergy-info text-sm text-gray-600">
-                      Synergizes with: {synergizedWith.length} ({synergizedWith.join(', ')}) {/* Count and list of synergies */}
+                      Synergizes with: {synergizedWith.length} ({synergizedWith.join(', ')})
                     </div>
                   </div>
                 );
@@ -226,4 +268,3 @@ const JokerFinder = () => {
 };
 
 export default JokerFinder;
-
