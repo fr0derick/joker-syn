@@ -3,6 +3,8 @@
 
 However, this means that the synergy database will require some serious tweaks, because there are a fair few incorrect synergies. I'm probably going to do this as I play the game - hopefully it'll even out.
 
+The back end is hosted on Render, on the free plan. This means that if you open the vercel app, you might need to refresh a few times for the backend to wake up and begin loading the joker db
+
 ## Features
 - Add and remove jokers from your collection
 - Automatically suggest synergetic jokers based on your collection
