@@ -1,80 +1,97 @@
-# joker-syn
-Filters the best Jokers based on what you already have 
+# Joker Syn
+**Joker Syn** filters and suggests the best Jokers based on your current collection. This was achieved scraping synergy data from the Balatro Wiki (https://balatrogame.fandom.com/wiki/Balatro_Wiki)
+However, this means that the synergy database will require some serious tweaks, because there are a fair few incorrect synergies. I'm probably going to do this as I play the game - hopefully it'll even out.
+
+## Features
+- Add and remove jokers from your collection
+- Automatically suggest synergetic jokers based on your collection
+- Filter and sort jokers
+- Rearrange your joker collection using drag and drop
 
 ## Requirements
+Ensure you have the following installed on your system:
+- **Node.js** (with npm)
+- **SQLite** (for database management)
 
-- Python 
-- Node.js & npm
+## Project Structure
 
+### Backend
+The backend provides API endpoints for joker data and synergies using a Node.js + Express server with SQLite as the database. The backend serves synergies and joker data at `http://localhost:3001`.
 
-### backend
-backend provides API en
-point for joker data and synergies
+#### Key Routes
+- **GET `/get_all_jokers`** - Retrieves all available jokers.
+- **POST `/find_synergies`** - Finds synergies based on the jokers in your collection.
+- **POST `/add_synergy`** - Adds synergy between two jokers (requires API key).
+- **POST `/delete_synergy`** - Removes synergy between two jokers (requires API key).
 
-### modules
+### Frontend
+The frontend is built with React. It runs at `http://localhost:3000`.
 
-#### react
+#### Synergy Management
+- You can make changes to database (removing/adding synergies) at `http://localhost:3000/dev-tools`.
 
-- tailwindcss
-- react-dom
-- react-router-dom
-- framer-motion 
-- @hello-pangea/dnd
-- dotenv
-- cors
-- express
-- sqlite3
-#### backend
+## Modules
 
-Need to run server.js (backend) alongside frontend,
+### Frontend Modules (React)
+- **react**
+- **react-dom**
+- **react-router-dom**
+- **tailwindcss**
+- **framer-motion**
+- **@hello-pangea/dnd**
 
-serves synergies at `http://localhost:3000`.
-manage connections at `http://localhost:3000/dev-tools`
+### Backend Modules (Node.js)
+- **express**
+- **cors**
+- **dotenv**
+- **sqlite3**
 
-#### modules
+### Installing Dependencies
+To install the required modules for both the frontend and backend, run:
 
-idk what modules but to install modules
-
-```
-npm install
-``` 
-
-#### running the frontend
-to run frontend
-```
-npm start
-```
-
-then navigate to `http://localhost:3000` in your web browser
-
-Frontend and backend need to run simultaneously
-
-![image](https://github.com/user-attachments/assets/bbb96d27-1cb2-4955-bfbe-fd4b7815d217)
+`npm install`
 
 
+## Running the Project
 
-![image](https://github.com/user-attachments/assets/e7965ef5-0805-4133-8ad5-f4a6808c1055)
+### Running the Backend
+1. Rrquires the SQLite database
+2. Run the backend (server.js):
 
+`node server.js`
 
-# Known Issues
+3. Backend server will be running at `http://localhost:3001`.
 
-- ~~animation code has a lot of conflicts~~
-- ~~managing synergies needs to be vice versa~~
-- Selecting a joker and then immediately removing it causes the jokers to still appear on the right until the next update
-- ~~drag and drop animations are inconsistent~~
-- Not sure how this would look on other resolutions from 2560x1440
-- ~~adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers~~
-- ~~drag and drop visual is fucked. you can still drag and drop, but the joker your dragging now goes invisible~~
+### Running the Frontend
+1. Start the development server:
 
-# To Do
+`npm start`
 
-- ~~replace grid elements with joker card images~~
-- ~~make jokers overlap each other like in Balatro when you have too many jokers~~
-- ~~add more animations to grid elements to reflect balatro style~~ - not reflecting balatro style but its something
-- add balatro swirl background
-- Introduce better UI
-- maybe add logic for copying jokers like blueprint to copy the ID of the joker to the right
-- ~~drag and drop to rearrange Your Jokers panel~~
-- ~~sort joker search panel alphabetically~~
-- show stats for each joker on hover or right 
+2. Available at `http://localhost:3000`.
 
+### Both the frontend and backend need to run simultaneously in order for the app to work.
+
+## Environment Variables
+Managing synergies requires you to make a **.env** file with following:
+
+`API_KEY=your_secret_api_key`
+
+I added this just so that people couldn't modify the database at will on the vercel app. You could remove the API key functionality when you're running on local machine.
+
+## Screenshots
+### Joker Management
+![Joker Management Screenshot](https://github.com/user-attachments/assets/bbb96d27-1cb2-4955-bfbe-fd4b7815d217)
+
+### Dev Tools
+![Dev Tools Screenshot](https://github.com/user-attachments/assets/e7965ef5-0805-4133-8ad5-f4a6808c1055)
+
+## Known Issues
+- Selecting a joker and immediately removing it causes the jokers to still appear until the next update.
+- Tested on 2560x1440 resolution, but not sure how it looks on other screen sizes, not even sure if mobile is supported (probably not.)
+- Some jokers will be listed as synergetic even though they are not. This was a result of poor scraping from the Balatro Wiki. (ie, the X2 mult collection of jokers such as the family, the duo, are listed as synergies with each other.)
+
+## To-Do List
+- Add a swirl background to match the Balatro style.
+- Improve UI design for a better user experience.
+- Add logic for copying joker data (like `Blueprint` functionality).
+- Show stats for each joker on hover or right-click.
