@@ -1,75 +1,123 @@
 import React, { useState, useEffect } from 'react';
 import './DevTools.css';  // Import the new CSS file for styling
+import config from '../config';
 
 const DevTools = () => {
   const [allJokers, setAllJokers] = useState([]);
   const [selectedJoker, setSelectedJoker] = useState('');
   const [jokerSynergies, setJokerSynergies] = useState([]);
   const [newSynergyJoker, setNewSynergyJoker] = useState('');
+  const [apiKey, setApiKey] = useState('');  
+  const [apiKeySet, setApiKeySet] = useState(false); 
+
+  // Function to set the API key and confirm
+const handleSetApiKey = () => {
+  if (apiKey) {
+    setApiKeySet(true);
+    alert("API key set successfully!");
+  } else {
+    alert("Please enter a valid API key");
+  } 
+};
 
   // Fetch all jokers from the backend
   useEffect(() => {
-    const loadJokers = async () => {
-      const response = await fetch('http://localhost:5000/get_all_jokers');
-      const data = await response.json();
-      setAllJokers(data);
-    };
-    loadJokers();
-  }, []);
+    if (apiKeySet) {  // Ensure API key is set before making the request
+      const loadJokers = async () => {
+        const response = await fetch(`${config.API_BASE_URL}/get_all_jokers`);
+        const data = await response.json();
+        setAllJokers(data);
+      };
+      loadJokers();
+    }
+  }, [apiKeySet]);  // Only run if the API key is set
 
   // Fetch synergies for the selected joker
   useEffect(() => {
-    if (selectedJoker) {
+    if (selectedJoker && apiKeySet) {  // Ensure API key is set before making the request
       const fetchSynergies = async () => {
-        const response = await fetch('http://localhost:5000/find_synergies', {
+        const response = await fetch(`${config.API_BASE_URL}/find_synergies`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey  // Include API key in the headers
+          },
           body: JSON.stringify({ jokers: [selectedJoker] }),
         });
         const data = await response.json();
 
         // Check if there are synergies
         if (Object.keys(data).length > 0) {
-          setJokerSynergies(Object.keys(data));  // Update state with the list of related jokers
+          setJokerSynergies(Object.keys(data)); 
         } else {
-          setJokerSynergies([]);  // If no synergies found
+          setJokerSynergies([]);
         }
       };
       fetchSynergies();
     }
-  }, [selectedJoker]);
+  }, [selectedJoker, apiKeySet]);
 
-  // Function to add a synergy between two jokers
+  // Function to add a two-way synergy between two jokers
   const addSynergy = async () => {
-    if (selectedJoker && newSynergyJoker) {
-      await fetch('http://localhost:5000/add_synergy', {
+    if (selectedJoker && newSynergyJoker && apiKeySet) {  // Ensure API key is set before making the request
+      await fetch(`${config.API_BASE_URL}/add_synergy`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey  // Include API key in the headers
+        },
         body: JSON.stringify({ joker1: selectedJoker, joker2: newSynergyJoker }),
       });
-      alert(`Synergy added between ${selectedJoker} and ${newSynergyJoker}`);
-      setNewSynergyJoker('');  // Reset the field after adding the synergy
 
-      // Re-fetch synergies to keep the UI in sync
-      setSelectedJoker(selectedJoker);
+      await fetch(`${config.API_BASE_URL}/add_synergy`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey  // Include API key in the headers
+        },
+        body: JSON.stringify({ joker1: newSynergyJoker, joker2: selectedJoker }),
+      });
+
+      alert(`Synergy added between ${selectedJoker} and ${newSynergyJoker}`);
+
+      // Clear the synergy input and refresh the list
+      setNewSynergyJoker('');
+      setSelectedJoker(selectedJoker); 
+    } else {
+      alert("Please set the API key and select both jokers.");
     }
   };
 
-  // Function to remove a synergy between two jokers
+  // Function to remove a two-way synergy between two jokers
   const removeSynergy = async (jokerToRemove) => {
-    if (selectedJoker && jokerToRemove) {
-      await fetch('http://localhost:5000/delete_synergy', {
+    if (selectedJoker && jokerToRemove && apiKeySet) {  // Ensure API key is set before making the request
+      await fetch(`${config.API_BASE_URL}/delete_synergy`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey  // Include API key in the headers
+        },
         body: JSON.stringify({ joker1: selectedJoker, joker2: jokerToRemove }),
       });
+
+      await fetch(`${config.API_BASE_URL}/delete_synergy`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey  // Include API key in the headers
+        },
+        body: JSON.stringify({ joker1: jokerToRemove, joker2: selectedJoker }),
+      });
+
       alert(`Synergy removed between ${selectedJoker} and ${jokerToRemove}`);
 
-      // Update the UI
+      // Update the UI by removing the synergy locally
       setJokerSynergies(jokerSynergies.filter((j) => j !== jokerToRemove));
 
-      // Re-fetch synergies
+      // Refresh synergies
       setSelectedJoker(selectedJoker);
+    } else {
+      alert("Please set the API key and select both jokers.");
     }
   };
 
@@ -80,6 +128,19 @@ const DevTools = () => {
         <h1>Joker Synergy Management</h1>
         <button onClick={() => window.location.href = '/'}>Back to Main</button>
       </header>
+
+      {/* Input for API Key */}
+      <div className="api-key-section">
+        <label htmlFor="api-key-input">Enter API Key:</label>
+        <input
+          id="api-key-input"
+          type="text"
+          value={apiKey}
+          onChange={(e) => setApiKey(e.target.value)}  // Store the entered API key in state
+          placeholder="Enter your API key"
+        />
+        <button onClick={handleSetApiKey}>Set API Key</button>
+      </div>
 
       <div className="dev-tools-content">
         {/* Remove Synergies Section */}
