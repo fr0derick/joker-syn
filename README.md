@@ -69,6 +69,7 @@ Frontend and backend need to run simultaneously
 - drag and drop animations are inconsistent
 - Not sure how this would look on other resolutions from 2560x1440
 - adding a joker to your collection from the synergies panel results in huge issues, especially with drag and drop and removing jokers
+- drag and drop visual is fucked. you can still drag and drop, but the joker your dragging now goes invisible
 
 # To Do
 
