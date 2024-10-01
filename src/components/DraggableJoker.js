@@ -56,7 +56,7 @@ const DraggableJoker = ({
           }}
         >
           <motion.div
-            className="joker-card bg-white p-4 rounded shadow"
+            className="joker-card bg-white m-3 rounded shadow"
             variants={variants}
             animate={snapshot.isDragging ? 'dragging' : 'notDragging'}
             whileHover={{ scale: 1.05 }}
