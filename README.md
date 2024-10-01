@@ -25,13 +25,17 @@ point for joker data and synergies
 - react-router-dom
 - framer-motion 
 - @hello-pangea/dnd
-
+- dotenv
+- 
 #### backend
 
 Need to run list-app.py (backend) alongside frontend,
 
 serves synergies at `http://localhost:5000`.
 manage connections at `http://localhost:5000/dev-tools`
+
+### UPDATE: moved backend to server.js
+still need backend and frontend simultaneously. 
 
 ### 2. Frontend
 
