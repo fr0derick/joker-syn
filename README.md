@@ -100,3 +100,4 @@ I added this just so that people couldn't modify the database at will on the ver
 - Add logic for copying joker data (like `Blueprint` functionality).
 - Show stats for each joker on hover or right-click.
 - Add colorblind mode
+- Add filtering based on deck.
