@@ -1,5 +1,6 @@
 # Joker Syn
 **Joker Syn** filters and suggests the best Jokers based on your current collection. This was achieved scraping synergy data from the Balatro Wiki (https://balatrogame.fandom.com/wiki/Balatro_Wiki)
+It's essentially a joker synergy finder - I made it so that I didn't have to search for jokers on the balatro wiki every time.
 
 However, this means that the synergy database will require some serious tweaks, because there are a fair few incorrect synergies. I'm probably going to do this as I play the game - hopefully it'll even out.
 
