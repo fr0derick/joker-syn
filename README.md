@@ -93,6 +93,7 @@ I added this just so that people couldn't modify the database at will on the ver
 - Selecting a joker and immediately removing it causes the jokers to still appear until the next update.
 - Tested on 2560x1440 resolution, but not sure how it looks on other screen sizes, not even sure if mobile is supported (probably not.)
 - Some jokers will be listed as synergetic even though they are not. This was a result of poor scraping from the Balatro Wiki. (ie, the X2 mult collection of jokers such as the family, the duo, are listed as synergies with each other.)
+- Color indicator sometimes only shows for one, and not the other.
 
 ## To-Do List
 - Add a swirl background to match the Balatro style.
