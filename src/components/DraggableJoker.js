@@ -1,10 +1,10 @@
-// src/components/DraggableJoker.js
-
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import PropTypes from 'prop-types';
 import JokerCard from './JokerCard';
+import SynergyDots from './SynergyDots'; // Import SynergyDots component
+import { handleMouseMove, cardVariants, tapEffect, useIdleTilt } from '../utils/animations'; // Import animation utils
 
 const DraggableJoker = ({
   jokerObj,
@@ -17,19 +17,14 @@ const DraggableJoker = ({
   cardBorderWidth,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
 
-  const variants = {
-    dragging: {
-      opacity: 0.7,
-      rotate: 8,
-      transition: { duration: 0, ease: 'linear' },
-    },
-    notDragging: {
-      opacity: 1,
-      rotate: 0,
-      transition: { duration: 0, ease: 'linear' },
-    },
-  };
+  // motion values for tilt effect
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+
+  // apply idle tilt anim using custom hook
+  useIdleTilt(rotateX, rotateY, isHovered);
 
   const marginLeft = isFirst ? 0 : -overlapPerCard;
 
@@ -43,15 +38,48 @@ const DraggableJoker = ({
             position: 'relative',
           }}
         >
+          {/* Shadow Element - Ensure it is always rendered regardless of dragging or not */}
+          <div
+            className="joker-card-shadow"
+            style={{
+              position: 'absolute',
+              top: '15px',  // Offset shadow further down
+              left: '-15px', // Offset shadow further to the left
+              width: `${cardWidth}px`,
+              height: '100%',
+              filter: 'grayscale(1) brightness(0.2) opacity(0.6)',
+              transform: 'scale(1.05)',
+              zIndex: -1,
+              pointerEvents: 'none',
+            }}
+          >
+            <JokerCard name={jokerObj.name} />
+          </div>
+
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => {
+              setIsHovered(true);
+              // Reset rotateX and rotateY to 0 on hover
+              rotateX.set(0);
+              rotateY.set(0);
+            }}
+            onMouseMove={(e) => {
+              if (isHovered) {
+                handleMouseMove(e, cardRef, rotateX, rotateY);
+              }
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+              // Reset rotateX and rotateY to 0 on mouse leave
+              rotateX.set(0);
+              rotateY.set(0);
+            }}
             style={{
               ...provided.draggableProps.style,
-              cursor: 'pointer',
+              cursor: 'default',
               zIndex: isHovered ? 1000 : snapshot.isDragging ? 999 : 'auto',
             }}
             onClick={() => {
@@ -60,12 +88,13 @@ const DraggableJoker = ({
               }
             }}
           >
+            {/* Main Card Element */}
             <motion.div
+              ref={cardRef}
               className="joker-card bg-white m-2 rounded shadow"
-              variants={variants}
-              animate={snapshot.isDragging ? 'dragging' : 'notDragging'}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              variants={cardVariants}
+              animate={snapshot.isDragging ? 'dragging' : undefined}
+              whileTap={tapEffect}
               style={{
                 willChange: 'transform, opacity',
                 borderRadius: '5px',
@@ -74,42 +103,15 @@ const DraggableJoker = ({
                 borderWidth: `${cardBorderWidth}px`,
                 borderColor: 'transparent',
                 transition: 'transform 0.1s ease, box-shadow 0.1s ease',
+                rotateX, // Apply tilt effect via motion values
+                rotateY,
               }}
             >
               <JokerCard name={jokerObj.name} />
             </motion.div>
 
             {/* Synergy Dots */}
-            {synergyColors.length > 0 && (
-              <div
-                className="synergy-dots"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  marginTop: '3px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: `${cardWidth}px`,
-                  margin: '0 auto',
-                }}
-              >
-                {synergyColors.map((color, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      width: '14px',
-                      height: '14px',
-                      borderRadius: '50%',
-                      backgroundColor: color,
-                      margin: '2px',
-                      border: '2px solid black',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    title={`Synergy ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            )}
+            {synergyColors.length > 0 && <SynergyDots synergyColors={synergyColors} cardWidth={cardWidth} />}
           </div>
         </div>
       )}
