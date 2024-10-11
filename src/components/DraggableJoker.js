@@ -3,8 +3,8 @@ import { Draggable } from '@hello-pangea/dnd';
 import { motion, useMotionValue } from 'framer-motion';
 import PropTypes from 'prop-types';
 import JokerCard from './JokerCard';
-import SynergyDots from './SynergyDots'; // Import SynergyDots component
-import { handleMouseMove, cardVariants, tapEffect, useIdleTilt } from '../utils/animations'; // Import animation utils
+import SynergyDots from './SynergyDots';
+import { handleMouseMove, cardVariants, tapEffect, useIdleTilt } from '../utils/animations';
 
 const DraggableJoker = ({
   jokerObj,
@@ -38,13 +38,13 @@ const DraggableJoker = ({
             position: 'relative',
           }}
         >
-          {/* Shadow Element - Ensure it is always rendered regardless of dragging or not */}
+          {/* Shadow Element - wip */}
           <div
             className="joker-card-shadow"
             style={{
               position: 'absolute',
-              top: '15px',  // Offset shadow further down
-              left: '-15px', // Offset shadow further to the left
+              top: '15px', 
+              left: '-15px',
               width: `${cardWidth}px`,
               height: '100%',
               filter: 'grayscale(1) brightness(0.2) opacity(0.6)',
@@ -62,7 +62,6 @@ const DraggableJoker = ({
             {...provided.dragHandleProps}
             onMouseEnter={() => {
               setIsHovered(true);
-              // Reset rotateX and rotateY to 0 on hover
               rotateX.set(0);
               rotateY.set(0);
             }}
@@ -73,7 +72,6 @@ const DraggableJoker = ({
             }}
             onMouseLeave={() => {
               setIsHovered(false);
-              // Reset rotateX and rotateY to 0 on mouse leave
               rotateX.set(0);
               rotateY.set(0);
             }}
@@ -103,7 +101,7 @@ const DraggableJoker = ({
                 borderWidth: `${cardBorderWidth}px`,
                 borderColor: 'transparent',
                 transition: 'transform 0.1s ease, box-shadow 0.1s ease',
-                rotateX, // Apply tilt effect via motion values
+                rotateX,
                 rotateY,
               }}
             >
