@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import PropTypes from 'prop-types';
 import JokerCard from './JokerCard';
-import SynergyDots from './SynergyDots';
-import { handleMouseMove, cardVariants, tapEffect, useIdleTilt } from '../utils/animations';
+import SynergyDots from './SynergyDots'; 
+import { handleMouseMove, useIdleTilt } from '../utils/animations';
 
 const DraggableJoker = ({
   jokerObj,
@@ -19,14 +19,24 @@ const DraggableJoker = ({
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
 
-  // motion values for tilt effect
+  // Rotation Motion values
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
-
-  // apply idle tilt anim using custom hook
-  useIdleTilt(rotateX, rotateY, isHovered);
+  const rotateZ = useMotionValue(0);
 
   const marginLeft = isFirst ? 0 : -overlapPerCard;
+
+  // Idle tilt animation for smoother interactions
+  useIdleTilt(rotateX, rotateY, isHovered);
+
+  // Reset Z rotation upon drag end
+  useEffect(() => {
+    return rotateZ.onChange((latest) => {
+      if (Math.abs(latest) < 0.01) {
+        rotateZ.set(0);
+      }
+    });
+  }, [rotateZ]);
 
   return (
     <Draggable key={jokerObj.id} draggableId={jokerObj.id} index={index}>
@@ -38,71 +48,39 @@ const DraggableJoker = ({
             position: 'relative',
           }}
         >
-          {/* Shadow Element - wip */}
-          <div
-            className="joker-card-shadow"
-            style={{
-              position: 'absolute',
-              top: '15px', 
-              left: '-15px',
-              width: `${cardWidth}px`,
-              height: '100%',
-              filter: 'grayscale(1) brightness(0.2) opacity(0.6)',
-              transform: 'scale(1.05)',
-              zIndex: -1,
-              pointerEvents: 'none',
-            }}
-          >
-            <JokerCard name={jokerObj.name} />
-          </div>
-
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            onMouseEnter={() => {
-              setIsHovered(true);
-              rotateX.set(0);
-              rotateY.set(0);
-            }}
-            onMouseMove={(e) => {
-              if (isHovered) {
-                handleMouseMove(e, cardRef, rotateX, rotateY);
-              }
-            }}
-            onMouseLeave={() => {
-              setIsHovered(false);
-              rotateX.set(0);
-              rotateY.set(0);
-            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseMove={(e) => isHovered && handleMouseMove(e, cardRef, rotateX, rotateY)}
+            onMouseLeave={() => setIsHovered(false)}
             style={{
               ...provided.draggableProps.style,
+              zIndex: snapshot.isDragging ? 999 : isHovered ? 1000 : 'auto',
               cursor: 'default',
-              zIndex: isHovered ? 1000 : snapshot.isDragging ? 999 : 'auto',
             }}
-            onClick={() => {
-              if (!snapshot.isDragging) {
-                removeJokerFromCollection(jokerObj.id);
-              }
-            }}
+            onClick={() => !snapshot.isDragging && removeJokerFromCollection(jokerObj.id)}
           >
-            {/* Main Card Element */}
             <motion.div
               ref={cardRef}
-              className="joker-card bg-white m-2 rounded shadow"
-              variants={cardVariants}
-              animate={snapshot.isDragging ? 'dragging' : undefined}
-              whileTap={tapEffect}
+              className="joker-card"
+              drag
+              dragConstraints={cardRef}
+              dragElastic={0}
+              onDrag={(e, info) => {
+                const inertiaRotation = info.velocity.x / 100;
+                rotateZ.set(inertiaRotation);
+              }}
+              onDragEnd={() => {
+                animate(rotateZ, 0, { type: 'spring', stiffness: 100, damping: 20 });
+              }}
               style={{
-                willChange: 'transform, opacity',
-                borderRadius: '5px',
-                boxSizing: 'border-box',
                 width: `${cardWidth}px`,
                 borderWidth: `${cardBorderWidth}px`,
-                borderColor: 'transparent',
-                transition: 'transform 0.1s ease, box-shadow 0.1s ease',
                 rotateX,
                 rotateY,
+                rotateZ,
               }}
             >
               <JokerCard name={jokerObj.name} />

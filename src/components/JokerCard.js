@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const JokerCard = ({ name, className = '' }) => {
+const JokerCard = ({ name, className = '', imgClassName = '' }) => {
   const [imgError, setImgError] = useState(false);
-  const [imgType, setImgType] = useState('png'); // Initialize the image type as 'png'
+  const [imgType, setImgType] = useState('png');
 
-  const formattedName = name.replace(/\s+/g, '_'); // Replace spaces with underscores
-  const imgSrc = `/images/jokers/${formattedName}.${imgType}`; // Dynamically use png or gif based on imgType
+  const formattedName = name.replace(/\s+/g, '_');
+  const imgSrc = `/images/jokers/${formattedName}.${imgType}`;
 
-  // Function to handle image load errors
   const handleImageError = () => {
     if (imgType === 'png') {
-      // If png fails, try gif
       setImgType('gif');
     } else {
-      // If gif also fails, fallback to text
       setImgError(true);
     }
   };
 
+  const commonStyles = {
+    display: 'block',
+    width: '100%',
+    height: 'auto',
+  };
+
   return (
-    <div className={`joker-card-wrapper ${className}`}>
+    <div className={`joker-card-wrapper relative ${className}`}>
       {imgError ? (
-        <div className="joker-card-text">
+        <div className="joker-card-text text-center font-bold">
           {name}
         </div>
       ) : (
         <>
-          <img 
-            src={imgSrc} 
-            alt={name} 
-            className="joker-card-image" 
-            onError={handleImageError} // Handle error and fallback to gif or text
+          <img
+            src={imgSrc}
+            alt={name}
+            className={`joker-card-image mt-2 ${imgClassName}`}
+            onError={handleImageError}
+            style={commonStyles}
           />
-          <div className="joker-card-name">{name}</div> {/* Display name below the image */}
+          <div className="joker-card-name text-center mt-2 font-semibold">
+            {name}
+          </div>
         </>
       )}
     </div>
@@ -43,6 +49,7 @@ const JokerCard = ({ name, className = '' }) => {
 JokerCard.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
+  imgClassName: PropTypes.string,
 };
 
 export default JokerCard;

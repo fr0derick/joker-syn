@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DragDropContext } from '@hello-pangea/dnd';
-import DraggableJoker from './DraggableJoker';
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
-import { getColorFromString, SYNERGY_COLOR_PALETTE } from '../utils/colorUtils';
-import { fetchAllJokers, fetchSynergies } from '../utils/api'; // Import API functions
-import { calculateOverlap } from '../utils/layoutUtils'; // Import layout utility
-import { sortSynergisticJokers } from '../utils/sortingUtils'; // Import sorting utility
+import { getColorFromString } from '../utils/colorUtils';
+import { fetchAllJokers, fetchSynergies } from '../utils/api';
+import { calculateOverlap } from '../utils/layoutUtils';
+import { sortSynergisticJokers } from '../utils/sortingUtils';
 
 const JokerFinder = () => {
   const [allJokers, setAllJokers] = useState([]);
@@ -24,21 +22,18 @@ const JokerFinder = () => {
   const CARD_HEIGHT = 150;
   const MARGIN_SIZE = 24;
 
-  // Function to add a joker to ownedJokers
+  // Add a joker to the owned jokers collection
   const addJokerToOwned = (jokerName) => {
-    const newJoker = {
-      id: `owned-joker-${nextJokerId}`,
-      name: jokerName,
-    };
-    setNextJokerId((prev) => prev + 1);
-    setOwnedJokers((prevOwnedJokers) => [...prevOwnedJokers, newJoker]);
+    const newJoker = { id: `owned-joker-${nextJokerId}`, name: jokerName };
+    setNextJokerId((prevId) => prevId + 1);
+    setOwnedJokers((prev) => [...prev, newJoker]);
   };
 
-  // Fetch all jokers from the backend
+  // Fetch all jokers on component mount
   useEffect(() => {
     const loadJokers = async () => {
       try {
-        const jokersWithIds = await fetchAllJokers(); // Use the refactored API call
+        const jokersWithIds = await fetchAllJokers();
         setAllJokers(jokersWithIds);
       } catch (error) {
         console.error('Error fetching jokers:', error);
@@ -47,60 +42,64 @@ const JokerFinder = () => {
     loadJokers();
   }, []);
 
-  // Fetch synergies and assign colors when owned jokers change
+  // Fetch synergies and assign colors whenever ownedJokers change
   useEffect(() => {
-    const findSynergies = async () => {
+    const updateSynergies = async () => {
       if (ownedJokers.length === 0) {
         setSynergyData({});
         setJokerColors({});
         return;
       }
       try {
-        const data = await fetchSynergies(ownedJokers); // Use the refactored API call
+        const data = await fetchSynergies(ownedJokers);
         setSynergyData(data);
 
         // Assign synergy colors
-        const colors = {};
-        Object.keys(data).forEach((jokerName) => {
+        const colors = Object.keys(data).reduce((acc, jokerName) => {
           const synergizedWith = data[jokerName].synergizedWith || [];
-          colors[jokerName] = synergizedWith.map((synergyJoker) =>
+          acc[jokerName] = synergizedWith.map((synergyJoker) =>
             getColorFromString([jokerName, synergyJoker].sort().join('-'))
           );
-        });
+          return acc;
+        }, {});
         setJokerColors(colors);
       } catch (error) {
         console.error('Error fetching synergies:', error);
       }
     };
-    findSynergies();
+    updateSynergies();
   }, [ownedJokers]);
 
-  // Handle drag end
+  // Handle drag end for reordering owned jokers
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
-    const items = Array.from(ownedJokers);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setOwnedJokers(items);
+    const reorderedJokers = Array.from(ownedJokers);
+    const [reorderedItem] = reorderedJokers.splice(result.source.index, 1);
+    reorderedJokers.splice(result.destination.index, 0, reorderedItem);
+    setOwnedJokers(reorderedJokers);
   };
 
-  // Function to remove a joker on click
+  // Remove a joker from the collection
   const removeJokerFromCollection = (jokerId) => {
-    setOwnedJokers((prevOwnedJokers) => prevOwnedJokers.filter((joker) => joker.id !== jokerId));
+    setOwnedJokers((prev) => prev.filter((joker) => joker.id !== jokerId));
   };
 
-  // Dynamic overlap logic to fit jokers in one row and manage overlap
+  // Recalculate overlap on window resize or when owned jokers change
   useEffect(() => {
-    const container = jokerGridRef.current;
-    if (container && ownedJokers.length > 0) {
-      const containerWidth = container.clientWidth;
-      const newOverlapPerCard = calculateOverlap(containerWidth, ownedJokers.length, CARD_WIDTH, MARGIN_SIZE); // Use refactored layout utility
-      setOverlapPerCard(newOverlapPerCard);
-    } else {
-      setOverlapPerCard(0);
-    }
+    const calculateCardOverlap = () => {
+      const container = jokerGridRef.current;
+      if (container && ownedJokers.length > 0) {
+        const containerWidth = container.clientWidth;
+        setOverlapPerCard(calculateOverlap(containerWidth, ownedJokers.length, CARD_WIDTH, MARGIN_SIZE));
+      } else {
+        setOverlapPerCard(0);
+      }
+    };
+
+    calculateCardOverlap();
+    window.addEventListener('resize', calculateCardOverlap);
+    return () => window.removeEventListener('resize', calculateCardOverlap);
   }, [ownedJokers]);
 
   return (
@@ -115,7 +114,6 @@ const JokerFinder = () => {
         handleOnDragEnd={handleOnDragEnd}
         CARD_HEIGHT={CARD_HEIGHT}
         CARD_WIDTH={CARD_WIDTH}
-        MARGIN_SIZE={MARGIN_SIZE}
         removeJokerFromCollection={removeJokerFromCollection}
         overlapPerCard={overlapPerCard}
         jokerColors={jokerColors}
@@ -124,7 +122,7 @@ const JokerFinder = () => {
       <RightPanel
         jokerFilter={jokerFilter}
         setJokerFilter={setJokerFilter}
-        sortedSynergisticJokers={sortSynergisticJokers(synergyData)} // Use refactored sorting utility
+        sortedSynergisticJokers={sortSynergisticJokers(synergyData)}
         synergyData={synergyData}
         ownedJokers={ownedJokers}
         addJokerToOwned={addJokerToOwned}
