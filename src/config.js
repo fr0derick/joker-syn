@@ -1,6 +1,6 @@
 // src/config.js
 const config = {
-    API_BASE_URL: 'https://joker-syn.onrender.com',
+    API_BASE_URL: 'http://localhost:3001',
   };
   
   export default config;

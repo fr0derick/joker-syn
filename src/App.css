@@ -1,90 +1,106 @@
-/* General Reset */
+/* Global styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html, body, #root, .App {
   margin: 0;
+  padding: 0;
 }
 
 body {
   display: flex;
-  font-family: Arial, sans-serif;
-  background-color: #e0f7fa;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
 }
 
+/* App container */
 .App {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
   width: 90vw;
   height: 80vh;
   max-width: 1920px;
   max-height: 80vh;
   text-align: center;
-  border: 2px solid black;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
-.joker-grid {
+/* Joker grid */
+.joker-grid,
+.find-joker-grid,
+.synergy-grid {
   display: flex;
   flex-wrap: nowrap;
-  overflow: hidden;
   position: relative;
-  align-items: flex-start;
+  align-items: center;
+  overflow: hidden;
+  width: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-  .joker-card-wrapper {
-    flex: 0 0 auto;
-    width: 140px;
-    position: relative;
-    transition: transform 0.2s ease;
-    border-radius: 5px; /* To make it look cleaner */
-    border: 2px solid transparent; /* Default border */
-  }
-
-
-/* Hover effect for Joker cards */
-.joker-card-wrapper:hover {
-  transform: scale(1.05); /* Slightly enlarge the card on hover */
+.joker-grid::-webkit-scrollbar,
+.find-joker-grid::-webkit-scrollbar,
+.synergy-grid::-webkit-scrollbar {
+  display: none;
 }
 
-/* JokerCard image styles */
+/* Joker card wrapper */
+.joker-card-wrapper {
+  flex: 0 0 auto;
+  width: 140px;
+  position: relative;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.joker-card-wrapper:hover,
+.synergy-card:hover {
+  transform: scale(1.05);
+}
+
+/* Joker card */
+.joker-card {
+  display: block;
+  background-color: transparent;
+  width: 100%;
+  padding: 0;
+  border: none;
+}
+
 .joker-card-image {
   width: 100%;
   height: auto;
-  object-fit: cover; /* Ensure image fits nicely within the container */
-  border-radius: 0;   /* Remove rounding */
-  box-shadow: none;   /* No shadow */
+  object-fit: cover;
 }
 
-/* JokerCard container styles */
-.joker-card {
-  background-color: transparent;
-  padding: 0;
-  box-shadow: none;
-  border: none;
-  display: block;
+.joker-card-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: auto;
+  height: 100%;
+  padding: 1px;
+  background-color: transparent;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Grid layout for other sections */
-.find-joker-grid,
-.synergy-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  align-content: start;
-  overflow-y: auto;
-}
-
-/* Center the "No jokers" and "Synergetic jokers here" text */
+/* No Jokers message */
 .no-jokers-message,
 .synergetic-jokers-message {
   display: flex;
@@ -95,67 +111,33 @@ body {
   text-align: center;
 }
 
-/* Scrollable grid for "Find Jokers" */
-.find-joker-grid {
-  overflow-y: auto;
-}
-
-/* Scrollable grid for "Synergetic Jokers" */
+/* Synergy grid */
+.find-joker-grid,
 .synergy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  align-content: start;
   overflow-y: auto;
+  scrollbar-width: thin;
 }
 
-/* Fixed-size Joker Cards for fallback text and synergy info */
 .synergy-card {
-  border: none;
-  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: auto;
-  width: 100%; /* Full width for images */
+  width: 100%;
   text-align: center;
   font-weight: bold;
-  cursor: pointer;
   background-color: transparent;
-  border-radius: 0;
-  box-shadow: none;
   transition: transform 0.2s ease;
+  box-shadow: none;
 }
 
-/* Hover effect for Synergy cards */
-.synergy-card:hover {
-  transform: scale(1.05);
-}
-
-/* Synergy info below the card */
 .synergy-info {
   font-size: 12px;
   margin-top: 1px;
-}
-
-/* JokerCard text fallback styles */
-.joker-card-text {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1px;
-  background-color: transparent;
-  border-radius: 8px;
-  box-sizing: border-box;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* Hover effect for Joker and Synergy cards */
-.joker-card-text:hover,
-.synergy-card:hover {
-  transform: scale(1.05);
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
 }
