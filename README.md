@@ -6,7 +6,7 @@ However, this means that the synergy database will require some serious tweaks, 
 
 The back end is hosted on Render, on the free plan. This means that if you open the vercel app, you might need to wait and refresh a few times for the backend to wake up and begin loading the joker db. I'm going to transition to a CSV database and remove the need for a back end eventually, but this is how my project was written when I first started it, and I just kinda built everything from there.
 
-# README is a WIP im lazy to edit rn but here's the general gist
+# README is a WIP 
 
 ## Features
 - Add and remove jokers from your collection
