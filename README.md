@@ -37,5 +37,5 @@ To install the required modules:
 
 ## Screenshots
 ### Joker Management
-![Joker Management Screenshot](![image](https://github.com/user-attachments/assets/06be36a5-2e25-4e69-a56d-211bc9511fd5)
+(![image](https://github.com/user-attachments/assets/06be36a5-2e25-4e69-a56d-211bc9511fd5)
 
