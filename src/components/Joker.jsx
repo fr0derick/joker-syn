@@ -6,6 +6,7 @@ import JokerInfo from "./JokerInfo";
 
 const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
   const [imageError, setImageError] = useState(false);
+  const [imageType, setImageType] = useState("png");
   const [isHovering, setIsHovering] = useState(false);
   const [position, setPosition] = useState(null);
   const cardRef = useRef(null);
@@ -34,7 +35,15 @@ const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
   }, [isHovering, updatePosition]);
 
   const imageName = name.replace(/\s+/g, "_");
-  const imagePath = `/images/jokers/${imageName}.png`;
+  const imagePath = `/images/jokers/${imageName}.${imageType}`;
+
+  const handleImageError = () => {
+    if (imageType === "png") {
+      setImageType("gif");
+    } else {
+      setImageError(true);
+    }
+  };
 
   const variants = {
     initial: {},
@@ -117,7 +126,7 @@ const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
                 alt={name}
                 className="w-full h-full object-cover pixelated select-none"
                 draggable="false"
-                onError={() => setImageError(true)}
+                onError={handleImageError}
                 onClick={onClick}
                 style={{
                   WebkitUserDrag: "none",
