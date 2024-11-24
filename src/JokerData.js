@@ -5,10 +5,10 @@
 
 // Rarity values: 0 = Common, 1 = Uncommon, 2 = Rare, 3 = Legendary
 
-
 //Easier to manually add colouring for each description. Considered writing logic to look for certain keywords and apply the color but there's seems to be so many in Balatro that conflicts will definitely arise
 const styleMapping = {
-  redBox: "background-color: #FE5F55; color: white; padding: 1px 2px; border-radius: 3px;",
+  redBox:
+    "background-color: #FE5F55; color: white; padding: 1px 2px; border-radius: 3px;",
 
   red: "color: #ff4d40",
   blue: "color: #0095ff",
@@ -26,183 +26,139 @@ const styleMapping = {
   club: "color: #074540",
   heart: "color: #f11b51",
   spade: "color: #242c56",
-
 };
 
 const parseDescription = (text) => {
-  return text.replace(/\{\{([\w\s().,+:\-%<>|[\]$#@!*]+)\|(\w+)\}\}/g, (match, content, styleKey) => {
-    const style = styleMapping[styleKey];
-    if (style) {
-      return `<span style="${style}">${content}</span>`;
+  return text.replace(
+    /\{\{([\w\s().,+:\-%<>|[\]$#@!*]+)\|(\w+)\}\}/g,
+    (match, content, styleKey) => {
+      const style = styleMapping[styleKey];
+      if (style) {
+        return `<span style="${style}">${content}</span>`;
+      }
+      return content;
     }
-    return content; 
-  });
+  );
 };
 
 export const jokerdata = {
   "Lucky Cat": {
     name: "Lucky Cat",
     description: parseDescription(
-      "This Joker gains {{X0.25|redBox}} Mult every time a {{Lucky|orange}} card {{successfully|palegreen}} triggers."),
+      "This Joker gains {{X0.25|redBox}} Mult every time a {{Lucky|orange}} card {{successfully|palegreen}} triggers."
+    ),
     rarity: 1,
     synergies: [
       "Baseball Card",
-      "Bloodstone",
       "Cartomancer",
-      "Certificate",
       "Dusk",
-      "Glass Joker",
-      "Golden Ticket",
       "Hack",
       "Hanging Chad",
       "Oops! All 6s",
-      "Red Card",
       "Sock and Buskin",
-      "Steel Joker",
-      "Stone Joker",
     ],
   },
   Seance: {
     name: "Seance",
     description: parseDescription(
-      "If {{poker hand|orange}} is a {{Straight Flush|orange}}, create a random {{Spectral|spectral}} card {{(Must have room)|lgrey}}"),
+      "If {{poker hand|orange}} is a {{Straight Flush|orange}}, create a random {{Spectral|spectral}} card {{(Must have room)|lgrey}}"
+    ),
     rarity: 1,
     synergies: [
-      "Arrowhead",
-      "Bloodstone",
       "Blueprint",
       "Brainstorm",
       "Crazy Joker",
-      "Credit Card",
-      "DNA",
-      "Driver's License",
-      "Drunkard",
-      "Erosion",
-      "Fibonacci",
       "Four Fingers",
-      "Hit the Road",
-      "Hologram",
-      "Joker Stencil",
       "Juggler",
-      "Merry Andy",
-      "Onyx Agate",
       "Perkeo",
-      "Scholar",
       "Shortcut",
       "Smeared Joker",
-      "The Family",
-      "Troubadour",
-      "Vampire",
-      "Wee Joker",
     ],
   },
   "Oops! All 6s": {
     name: "Oops! All 6s",
     description: parseDescription(
-       "Doubles all {{listed|orange}} probabilities {{(ex:|lgrey}} {{1 in 3|chance}} {{->|lgrey}} {{2 in 3|chance}}{{)|lgrey}}"),
+      "Doubles all {{listed|orange}} probabilities {{(ex:|lgrey}} {{1 in 3|chance}} {{->|lgrey}} {{2 in 3|chance}}{{)|lgrey}}"
+    ),
     rarity: 1,
     synergies: [
       "8 Ball",
-      "Baseball Card",
       "Bloodstone",
       "Business Card",
-      "Cavendish",
       "Glass Joker",
       "Gros Michel",
       "Hallucination",
-      "Hanging Chad",
       "Lucky Cat",
-      "Lusty Joker",
       "Reserved Parking",
-      "Sock and Buskin",
       "Space Joker",
     ],
   },
   Canio: {
     name: "Canio",
     description: parseDescription(
-      "This Joker gains {{X1|redBox}} Mult when a {{face|orange}} card is destroyed"),
+      "This Joker gains {{X1|redBox}} Mult when a {{face|orange}} card is destroyed"
+    ),
     rarity: 3,
     synergies: [
-      "Business Card",
-      "Cavendish",
-      "Chicot",
       "Erosion",
       "Glass Joker",
       "Hologram",
       "Pareidolia",
-      "Perkeo",
       "Trading Card",
-      "Triboulet",
-      "Yorick",
     ],
   },
   "To Do List": {
     name: "To Do List",
     description: parseDescription(
-      "Earn {{$4|gold}} if {{poker hand|orange}} is a {{[Poker Hand]|orange}}, poker hand changes at end of round"),
+      "Earn {{$4|gold}} if {{poker hand|orange}} is a {{[Poker Hand]|orange}}, poker hand changes at end of round"
+    ),
     rarity: 0,
     synergies: ["Blueprint", "Brainstorm"],
   },
   "Riff-Raff": {
     name: "Riff-Raff",
     description: parseDescription(
-      "When {{Blind|orange}} is selected, create {{2|orange}} {{Common|blue}} {{Jokers|orange}} {{(Must have room)|lgrey}}"),
+      "When {{Blind|orange}} is selected, create {{2|orange}} {{Common|blue}} {{Jokers|orange}} {{(Must have room)|lgrey}}"
+    ),
     rarity: 0,
-    synergies: ["Abstract Joker", "Cavendish", "Gros Michel"],
+    synergies: ["Abstract Joker", "Ceremonial Dagger", "Campfire"],
   },
   "Reserved Parking": {
     name: "Reserved Parking",
     description: parseDescription(
-      "Each {{face|orange}} card held in hand has a {{1 in 2|chance}} chance to give {{$1|gold}}"),
+      "Each {{face|orange}} card held in hand has a {{1 in 2|chance}} chance to give {{$1|gold}}"
+    ),
     rarity: 0,
     synergies: [
       "Baron",
-      "Business Card",
-      "Half Joker",
-      "Midas Mask",
       "Mime",
       "Oops! All 6s",
       "Pareidolia",
       "Ride the Bus",
       "Shoot the Moon",
-      "Smiley Face",
     ],
   },
   "Red Card": {
     name: "Red Card",
-    description: parseDescription( "This Joker gains {{+3|red}} Mult when any {{Booster Pack|orange}} is skipped"),
+    description: parseDescription(
+      "This Joker gains {{+3|red}} Mult when any {{Booster Pack|orange}} is skipped"
+    ),
     rarity: 0,
-    synergies: [
-      "Astronomer",
-      "Bloodstone",
-      "Business Card",
-      "Campfire",
-      "Constellation",
-      "Driver's License",
-      "Flash Card",
-      "Fortune Teller",
-      "Hallucination",
-      "Hologram",
-      "Lucky Cat",
-      "Matador",
-      "Rocket",
-      "Satellite",
-      "Steel Joker",
-      "Throwback",
-      "Vampire",
-    ],
+    synergies: ["Astronomer", "Business Card", "Hallucination", "Rocket"],
   },
   "Gros Michel": {
     name: "Gros Michel",
     description: parseDescription(
-      "{{+15|red}} Mult <br>{{1 in 6|chance}} chance this is destroyed at the end of round."),
+      "{{+15|red}} Mult <br>{{1 in 6|chance}} chance this is destroyed at the end of round."
+    ),
     rarity: 0,
-    synergies: ["Cavendish", "Oops! All 6s", "Riff-Raff"],
+    synergies: ["Oops! All 6s"],
   },
   "Midas Mask": {
     name: "Midas Mask",
-    description: parseDescription( "All played {{face|orange}} cards become {{Gold|orange}} cards when scored"),
+    description: parseDescription(
+      "All played {{face|orange}} cards become {{Gold|orange}} cards when scored"
+    ),
     rarity: 1,
     synergies: [
       "Baron",
@@ -212,7 +168,6 @@ export const jokerdata = {
       "Mime",
       "Pareidolia",
       "Reserved Parking",
-      "Ride the Bus",
       "Scary Face",
       "Shoot the Moon",
       "Smiley Face",
@@ -222,56 +177,40 @@ export const jokerdata = {
   Rocket: {
     name: "Rocket",
     description: parseDescription(
-      "Earn {{$1|gold}} at end of round. Payout increases by {{$2|gold}} when {{Boss Blind|orange}} is defeated"),
+      "Earn {{$1|gold}} at end of round. Payout increases by {{$2|gold}} when {{Boss Blind|orange}} is defeated"
+    ),
     rarity: 1,
-    synergies: [
-      "Baseball Card",
-      "Bootstraps",
-      "Bull",
-      "Flash Card",
-      "Red Card",
-    ],
+    synergies: ["Bootstraps", "Bull"],
   },
   Hack: {
     name: "Hack",
-    description: parseDescription( "Retrigger each played {{2|orange}}, {{3|orange}}, {{4|orange}}, or {{5|orange}}"),
+    description: parseDescription(
+      "Retrigger each played {{2|orange}}, {{3|orange}}, {{4|orange}}, or {{5|orange}}"
+    ),
     rarity: 1,
     synergies: [
-      "Ancient Joker",
-      "Bloodstone",
       "Blueprint",
       "Brainstorm",
-      "Cartomancer",
-      "Certificate",
-      "DNA",
       "Dusk",
       "Fibonacci",
       "Glass Joker",
-      "Greedy Joker",
       "Hiker",
       "Lucky Cat",
       "Odd Todd",
       "Ride the Bus",
       "Seltzer",
-      "Showman",
-      "The Idol",
-      "Trading Card",
-      "Vagabond",
       "Walkie Talkie",
       "Wee Joker",
     ],
   },
   "Marble Joker": {
     name: "Marble Joker",
-    description: parseDescription( "Adds one {{Stone|orange}} card to the deck when {{Blind|orange}} is selected"),
+    description: parseDescription(
+      "Adds one {{Stone|orange}} card to the deck when {{Blind|orange}} is selected"
+    ),
     rarity: 1,
     synergies: [
-      "Bootstraps",
-      "Burglar",
-      "Burnt Joker",
       "Driver's License",
-      "Flash Card",
-      "Four Fingers",
       "Half Joker",
       "Hologram",
       "Ride the Bus",
@@ -283,7 +222,9 @@ export const jokerdata = {
   },
   "Devious Joker": {
     name: "Devious Joker",
-    description: parseDescription( "{{+100|blue}} Chips if played hand contains a {{Straight|orange}}"),
+    description: parseDescription(
+      "{{+100|blue}} Chips if played hand contains a {{Straight|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Crazy Joker",
@@ -296,281 +237,163 @@ export const jokerdata = {
   },
   "The Family": {
     name: "The Family",
-    description: parseDescription( "{{X4|redBox}} Mult if played hand contains a {{Four of a Kind|orange}}"),
+    description: parseDescription(
+      "{{X4|redBox}} Mult if played hand contains a {{Four of a Kind|orange}}"
+    ),
     rarity: 2,
-    synergies: [
-      "Cloud 9",
-      "Flower Pot",
-      "Greedy Joker",
-      "Seance",
-      "The Duo",
-      "The Order",
-      "The Tribe",
-      "The Trio",
-      "Walkie Talkie",
-    ],
+    synergies: ["The Duo", "The Trio", "Zany Joker"],
   },
   "Odd Todd": {
     name: "Odd Todd",
     description: parseDescription(
-      "Played cards with {{odd|orange}} rank give +31 Chips when scored {{(A, 9, 7, 5, 3)|lgrey}}"),
+      "Played cards with {{odd|orange}} rank give +31 Chips when scored {{(A, 9, 7, 5, 3)|lgrey}}"
+    ),
     rarity: 0,
-    synergies: [
-      "Cloud 9",
-      "DNA",
-      "Even Steven",
-      "Fibonacci",
-      "Hack",
-      "Ride the Bus",
-      "Runner",
-      "Scholar",
-      "Shortcut",
-      "Trading Card",
-    ],
+    synergies: ["Cloud 9", "Fibonacci", "Hack", "Ride the Bus", "Scholar"],
   },
   "Space Joker": {
     name: "Space Joker",
-    description: parseDescription( "{{1 in 4|chance}} chance to upgrade level of played {{poker hand|orange}}"),
+    description: parseDescription(
+      "{{1 in 4|chance}} chance to upgrade level of played {{poker hand|orange}}"
+    ),
     rarity: 1,
     synergies: [
-      "Ancient Joker",
       "Blueprint",
       "Brainstorm",
       "Burglar",
       "Burnt Joker",
-      "Certificate",
-      "Crazy Joker",
       "Green Joker",
-      "Half Joker",
-      "Marble Joker",
       "Oops! All 6s",
       "Ramen",
-      "Spare Trousers",
       "Supernova",
     ],
   },
   Satellite: {
     name: "Satellite",
-    description: parseDescription( "Earn {{$1|gold}} at end of round per unique {{Planet|planet}} card used this run"),
+    description: parseDescription(
+      "Earn {{$1|gold}} at end of round per unique {{Planet|planet}} card used this run"
+    ),
     rarity: 1,
-    synergies: ["Astronomer", "Constellation", "Red Card"],
+    synergies: ["Astronomer", "Constellation"],
   },
   "Smiley Face": {
     name: "Smiley Face",
-    description: parseDescription( "Played {{face|orange}} cards give {{+5|red}} Mult when scored"),
+    description: parseDescription(
+      "Played {{face|orange}} cards give {{+5|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
-      "Baron",
       "Business Card",
       "Midas Mask",
       "Pareidolia",
       "Reserved Parking",
-      "Ride the Bus",
       "Scary Face",
-      "Shoot the Moon",
       "Sock and Buskin",
-      "Splash",
-      "Steel Joker",
       "Triboulet",
     ],
   },
   "Delayed Gratification": {
     name: "Delayed Gratification",
     description: parseDescription(
-      "Earn {{$2|gold}} per {{discard|orange}} if no discards are used by end of the round"),
+      "Earn {{$2|gold}} per {{discard|orange}} if no discards are used by end of the round"
+    ),
     rarity: 0,
-    synergies: [
-      "Banner",
-      "Castle",
-      "Drunkard",
-      "Four Fingers",
-      "Green Joker",
-      "Jolly Joker",
-      "Merry Andy",
-      "Ramen",
-      "Shortcut",
-      "Smeared Joker",
-    ],
+    synergies: ["Banner", "Drunkard", "Green Joker", "Merry Andy", "Ramen"],
   },
   "Hit the Road": {
     name: "Hit the Road",
     description: parseDescription(
-      "This Joker gains {{X0.5|redBox}} Mult for every {{Jack|orange}} discarded this round"),
+      "This Joker gains {{X0.5|redBox}} Mult for every {{Jack|orange}} discarded this round"
+    ),
     rarity: 2,
-    synergies: [
-      "Blueprint",
-      "Brainstorm",
-      "Certificate",
-      "DNA",
-      "Drunkard",
-      "Merry Andy",
-      "Seance",
-      "Yorick",
-    ],
+    synergies: ["Blueprint", "Brainstorm", "Drunkard", "Merry Andy", "Yorick"],
   },
   Madness: {
     name: "Madness",
     description: parseDescription(
-      "When {{Small Blind|orange}} or {{Big Blind|orange}} is selected, gain {{X0.5|redBox}} Mult and {{destroy|orange}} a random Joker"),
+      "When {{Small Blind|orange}} or {{Big Blind|orange}} is selected, gain {{X0.5|redBox}} Mult and {{destroy|orange}} a random Joker"
+    ),
     rarity: 1,
     synergies: ["Abstract Joker", "Obelisk", "Pareidolia"],
   },
   "Crazy Joker": {
     name: "Crazy Joker",
-    description: parseDescription( "{{+12|red}} Mult if played hand contains a {{Straight|orange}}"),
+    description: parseDescription(
+      "{{+12|red}} Mult if played hand contains a {{Straight|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Card Sharp",
-      "Droll Joker",
       "Four Fingers",
-      "Jolly Joker",
-      "Mad Joker",
       "Runner",
       "Seance",
       "Shortcut",
-      "Space Joker",
-      "Supernova",
       "Superposition",
       "Seance",
       "The Order",
-      "Zany Joker",
     ],
   },
   "Chaos the Clown": {
     name: "Chaos the Clown",
-    description: parseDescription( "{{1|orange}} free {{Reroll|chance}} per shop"),
+    description: parseDescription(
+      "{{1|orange}} free {{Reroll|chance}} per shop"
+    ),
     rarity: 0,
     synergies: ["Astronomer", "Campfire", "Constellation", "Flash Card"],
   },
   "Stone Joker": {
     name: "Stone Joker",
-    description: parseDescription( "Gives {{+25|blue}} Chips for each {{Stone Card|orange}} in your full deck"),
+    description: parseDescription(
+      "Gives {{+25|blue}} Chips for each {{Stone Card|orange}} in your full deck"
+    ),
     rarity: 1,
-    synergies: [
-      "Blueprint",
-      "Cartomancer",
-      "DNA",
-      "Glass Joker",
-      "Golden Ticket",
-      "Half Joker",
-      "Lucky Cat",
-      "Marble Joker",
-      "Steel Joker",
-    ],
+    synergies: ["Cartomancer", "DNA", "Half Joker", "Marble Joker"],
   },
   Cavendish: {
     name: "Cavendish",
     description: parseDescription(
-      "{{X3|redBox}} Mult <br>{{1 in 1000|chance}} chance this card is destroyed at the end of round"),
+      "{{X3|redBox}} Mult <br>{{1 in 1000|chance}} chance this card is destroyed at the end of round"
+    ),
     rarity: 0,
-    synergies: [
-      "Ancient Joker",
-      "Blueprint",
-      "Brainstorm",
-      "Canio",
-      "Flash Card",
-      "Fortune Teller",
-      "Gros Michel",
-      "Oops! All 6s",
-      "Riff-Raff",
-    ],
+    synergies: ["Blueprint", "Brainstorm", "Flash Card"],
   },
   Cartomancer: {
     name: "Cartomancer",
-    description: parseDescription( "Create a {{Tarot|tarot}} card when {{Blind|orange}} is selected"),
+    description: parseDescription(
+      "Create a {{Tarot|tarot}} card when {{Blind|orange}} is selected"
+    ),
     rarity: 1,
-    synergies: [
-      "Astronomer",
-      "Blueprint",
-      "Brainstorm",
-      "Burglar",
-      "Campfire",
-      "Cloud 9",
-      "Fortune Teller",
-      "Gift Card",
-      "Glass Joker",
-      "Golden Ticket",
-      "Greedy Joker",
-      "Green Joker",
-      "Hack",
-      "Luchador",
-      "Lucky Cat",
-      "Obelisk",
-      "Perkeo",
-      "Ride the Bus",
-      "Runner",
-      "Spare Trousers",
-      "Square Joker",
-      "Steel Joker",
-      "Stone Joker",
-      "Supernova",
-      "Wee Joker",
-    ],
+    synergies: ["Fortune Teller", "Gift Card", "Perkeo"],
   },
   "Flower Pot": {
     name: "Flower Pot",
     description: parseDescription(
-      "{{X3|redBox}} Mult if poker hand contains a {{Diamond|diamond}} card, {{Club|club}} card, {{Heart|heart}} card, and {{Spade|spade}} card"),
+      "{{X3|redBox}} Mult if poker hand contains a {{Diamond|diamond}} card, {{Club|club}} card, {{Heart|heart}} card, and {{Spade|spade}} card"
+    ),
     rarity: 1,
-    synergies: [
-      "Seeing Double",
-      "Smeared Joker",
-      "Splash",
-      "The Family",
-      "The Order",
-      "Walkie Talkie",
-    ],
+    synergies: ["Seeing Double", "Smeared Joker", "Splash"],
   },
   "Wee Joker": {
     name: "Wee Joker",
-    description: parseDescription( "This Joker gains {{+8|blue}} Chips when each played {{2|orange}} is scored"),
+    description: parseDescription(
+      "This Joker gains {{+8|blue}} Chips when each played {{2|orange}} is scored"
+    ),
     rarity: 2,
-    synergies: [
-      "Ancient Joker",
-      "Bloodstone",
-      "Burnt Joker",
-      "Cartomancer",
-      "Certificate",
-      "DNA",
-      "Drunkard",
-      "Even Steven",
-      "Fibonacci",
-      "Glass Joker",
-      "Hack",
-      "Half Joker",
-      "Hanging Chad",
-      "Hologram",
-      "Ice Cream",
-      "Joker",
-      "Merry Andy",
-      "Photograph",
-      "Seance",
-      "Square Joker",
-      "Trading Card",
-    ],
+    synergies: ["Even Steven", "Fibonacci", "Hack", "Hanging Chad"],
   },
   "Flash Card": {
     name: "Flash Card",
-    description: parseDescription( "This Joker gains {{+2|red}} Mult per {{reroll|orange}} in the shop"),
+    description: parseDescription(
+      "This Joker gains {{+2|red}} Mult per {{reroll|orange}} in the shop"
+    ),
     rarity: 1,
-    synergies: [
-      "Campfire",
-      "Cavendish",
-      "Certificate",
-      "Chaos the Clown",
-      "Cloud 9",
-      "Constellation",
-      "Golden Joker",
-      "Marble Joker",
-      "Matador",
-      "Red Card",
-      "Rocket",
-    ],
+    synergies: ["Chaos the Clown", "Constellation", "Golden Joker", "Rocket"],
   },
   "8 Ball": {
     name: "8 Ball",
     description: parseDescription(
-      "{{1 in 4|chance}} chance for each played {{8|orange}} to create a {{Tarot|tarot}} card when scored {{(Must have room)|lgrey}}"),
+      "{{1 in 4|chance}} chance for each played {{8|orange}} to create a {{Tarot|tarot}} card when scored {{(Must have room)|lgrey}}"
+    ),
     rarity: 0,
     synergies: [
       "Blueprint",
@@ -584,23 +407,22 @@ export const jokerdata = {
   Showman: {
     name: "Showman",
     description: parseDescription(
-      "{{Joker|orange}}, {{Tarot|tarot}}, {{Planet|planet}}, and {{Spectral|spectral}} cards may appear multiple times"),
+      "{{Joker|orange}}, {{Tarot|tarot}}, {{Planet|planet}}, and {{Spectral|spectral}} cards may appear multiple times"
+    ),
     rarity: 1,
-    synergies: ["Gift Card", "Hack", "Invisible Joker", "Mr. Bones"],
+    synergies: ["Gift Card"],
   },
   Baron: {
     name: "Baron",
-    description: parseDescription( "Each {{King|orange}} held in hand gives {{X1.5|redBox}} Mult"),
+    description: parseDescription(
+      "Each {{King|orange}} held in hand gives {{X1.5|redBox}} Mult"
+    ),
     rarity: 2,
     synergies: [
-      "Certificate",
-      "DNA",
-      "Half Joker",
       "Juggler",
       "Midas Mask",
       "Mime",
       "Raised Fist",
-      "Reserved Parking",
       "Shoot the Moon",
       "Smiley Face",
       "Troubadour",
@@ -608,75 +430,55 @@ export const jokerdata = {
   },
   Throwback: {
     name: "Throwback",
-    description: parseDescription( "{{X0.25|redBox}} Mult for each {{Blind|orange}} skipped this run"),
+    description: parseDescription(
+      "{{X0.25|redBox}} Mult for each {{Blind|orange}} skipped this run"
+    ),
     rarity: 1,
-    synergies: ["Ice Cream", "Red Card", "Turtle Bean"],
+    synergies: ["Ice Cream", "Turtle Bean"],
   },
   "Golden Joker": {
     name: "Golden Joker",
-    description: parseDescription( "Earn {{$4|gold}} at end of round"),
+    description: parseDescription("Earn {{$4|gold}} at end of round"),
     rarity: 0,
-    synergies: [
-      "Bull",
-      "Credit Card",
-      "Flash Card",
-      "Joker",
-      "Ramen",
-      "To the Moon",
-    ],
+    synergies: ["Bull", "Credit Card", "Flash Card", "Ramen", "To the Moon"],
   },
   "Onyx Agate": {
     name: "Onyx Agate",
     description: parseDescription(
-      "Played cards with {{Club|club}} suit give {{+7|red}} Mult when scored"),
+      "Played cards with {{Club|club}} suit give {{+7|red}} Mult when scored"
+    ),
     rarity: 1,
     synergies: [
       "Arrowhead",
       "Blackboard",
-      "Bloodstone",
-      "Certificate",
       "Droll Joker",
-      "Glass Joker",
       "Gluttonous Joker",
-      "Photograph",
-      "Rough Gem",
-      "Seance",
       "Smeared Joker",
-      "Steel Joker",
-      "The Idol",
-      "Triboulet",
     ],
   },
   "Jolly Joker": {
     name: "Jolly Joker",
-    description: parseDescription( "{{+8|red}} Mult if played hand contains a {{Pair|orange}}"),
+    description: parseDescription(
+      "{{+8|red}} Mult if played hand contains a {{Pair|orange}}"
+    ),
     rarity: 0,
     synergies: [
-      "Banner",
-      "Burglar",
-      "Crazy Joker",
-      "Delayed Gratification",
-      "Droll Joker",
-      "Green Joker",
       "Half Joker",
       "Mad Joker",
-      "Mystic Summit",
       "Spare Trousers",
-      "Splash",
-      "Square Joker",
       "Stuntman",
       "The Duo",
-      "Walkie Talkie",
       "Zany Joker",
     ],
   },
   Brainstorm: {
     name: "Brainstorm",
-    description: parseDescription( "Copies the ability of leftmost {{Joker|orange}}"),
+    description: parseDescription(
+      "Copies the ability of leftmost {{Joker|orange}}"
+    ),
     rarity: 2,
     synergies: [
       "8 Ball",
-      "Ancient Joker",
       "Baseball Card",
       "Blueprint",
       "Burglar",
@@ -691,43 +493,40 @@ export const jokerdata = {
       "Hack",
       "Hit the Road",
       "Loyalty Card",
-      "Luchador",
       "Mime",
-      "Mr. Bones",
       "Perkeo",
       "Seance",
       "Space Joker",
       "Stuntman",
-      "To Do List",
     ],
   },
   Astronomer: {
     name: "Astronomer",
-    description: parseDescription( "All {{Planet|planet}} cards and {{Celestial Packs|planet}} in the shop are {{free|orange}}"),
+    description: parseDescription(
+      "All {{Planet|planet}} cards and {{Celestial Packs|planet}} in the shop are {{free|orange}}"
+    ),
     rarity: 1,
     synergies: [
       "Campfire",
       "Cartomancer",
       "Chaos the Clown",
       "Constellation",
-      "Ramen",
       "Red Card",
       "Satellite",
     ],
   },
   Mime: {
     name: "Mime",
-    description: parseDescription( "Retrigger all card {{held in hand|orange}} abilities"),
+    description: parseDescription(
+      "Retrigger all card {{held in hand|orange}} abilities"
+    ),
     rarity: 1,
     synergies: [
       "Baron",
       "Blueprint",
       "Brainstorm",
-      "Certificate",
       "Half Joker",
       "Juggler",
-      "Merry Andy",
-      "Midas Mask",
       "Raised Fist",
       "Reserved Parking",
       "Shoot the Moon",
@@ -739,32 +538,22 @@ export const jokerdata = {
   "Card Sharp": {
     name: "Card Sharp",
     description: parseDescription(
-      "{{X3|redBox}} Mult if played {{poker hand|orange}} has already been played this round"),
+      "{{X3|redBox}} Mult if played {{poker hand|orange}} has already been played this round"
+    ),
     rarity: 1,
-    synergies: [
-      "Burglar",
-      "Crazy Joker",
-      "Drunkard",
-      "Green Joker",
-      "Half Joker",
-      "Juggler",
-      "Spare Trousers",
-      "Supernova",
-    ],
+    synergies: ["Burglar", "Drunkard", "Green Joker", "Supernova"],
   },
   "Fortune Teller": {
     name: "Fortune Teller",
-    description: parseDescription( "{{+1|red}} Mult per {{Tarot|tarot}} card used this run"),
+    description: parseDescription(
+      "{{+1|red}} Mult per {{Tarot|tarot}} card used this run"
+    ),
     rarity: 0,
     synergies: [
       "8 Ball",
       "Cartomancer",
-      "Cavendish",
-      "Certificate",
-      "Cloud 9",
       "Hallucination",
       "Perkeo",
-      "Red Card",
       "Superposition",
       "Vagabond",
       "Vampire",
@@ -772,76 +561,65 @@ export const jokerdata = {
   },
   Bull: {
     name: "Bull",
-    description: parseDescription( "{{+2|blue}} Chips for each {{$1|gold}} you have"),
+    description: parseDescription(
+      "{{+2|blue}} Chips for each {{$1|gold}} you have"
+    ),
     rarity: 1,
-    synergies: [
-      "Bootstraps",
-      "Certificate",
-      "Cloud 9",
-      "Golden Joker",
-      "Matador",
-      "Rocket",
-    ],
+    synergies: ["Bootstraps", "Golden Joker", "Matador", "Rocket"],
   },
   Stuntman: {
     name: "Stuntman",
-    description: parseDescription( "{{+250|blue}} Chips <br>{{-2|orange}} hand size"),
+    description: parseDescription(
+      "{{+250|blue}} Chips <br>{{-2|orange}} hand size"
+    ),
     rarity: 2,
     synergies: [
       "Blackboard",
       "Blueprint",
       "Brainstorm",
-      "Green Joker",
       "Half Joker",
       "Jolly Joker",
       "Juggler",
-      "Mime",
-      "Raised Fist",
       "Troubadour",
       "Turtle Bean",
     ],
   },
   Runner: {
     name: "Runner",
-    description: parseDescription( "Gains {{+15|blue}} Chips if played hand contains a {{Straight|orange}}"),
+    description: parseDescription(
+      "Gains {{+15|blue}} Chips if played hand contains a {{Straight|orange}}"
+    ),
     rarity: 0,
-    synergies: [
-      "Cartomancer",
-      "Crazy Joker",
-      "Four Fingers",
-      "Odd Todd",
-      "Shortcut",
-      "Spare Trousers",
-    ],
+    synergies: ["Crazy Joker", "Four Fingers", "Odd Todd", "Shortcut"],
   },
   "Spare Trousers": {
     name: "Spare Trousers",
-    description: parseDescription( "This Joker gains {{+2|red}} Mult if played hand contains a {{Two Pair|orange}}"),
+    description: parseDescription(
+      "This Joker gains {{+2|red}} Mult if played hand contains a {{Two Pair|orange}}"
+    ),
     rarity: 1,
     synergies: [
       "Burglar",
       "Card Sharp",
-      "Cartomancer",
-      "Jolly Joker",
       "Mad Joker",
-      "Obelisk",
-      "Runner",
       "Space Joker",
       "Square Joker",
       "Supernova",
-      "Walkie Talkie",
     ],
   },
   "Loyalty Card": {
     name: "Loyalty Card",
-    description: parseDescription( "{{X4|redBox}} Mult every {{6|orange}} hands played"),
+    description: parseDescription(
+      "{{X4|redBox}} Mult every {{6|orange}} hands played"
+    ),
     rarity: 1,
     synergies: ["Acrobat", "Blueprint", "Brainstorm", "Burglar"],
   },
   "Hanging Chad": {
     name: "Hanging Chad",
     description: parseDescription(
-      "Retrigger {{first|orange}} played card used in scoring {{2|orange}} additional times"),
+      "Retrigger {{first|orange}} played card used in scoring {{2|orange}} additional times"
+    ),
     rarity: 0,
     synergies: [
       "Bloodstone",
@@ -857,13 +635,13 @@ export const jokerdata = {
   "Smeared Joker": {
     name: "Smeared Joker",
     description: parseDescription(
-      "{{Hearts|heart}} and {{Diamonds|diamond}} count as the same suit <br>{{Spades|spade}} and {{Clubs|club}} count as the same suit"),
+      "{{Hearts|heart}} and {{Diamonds|diamond}} count as the same suit <br>{{Spades|spade}} and {{Clubs|club}} count as the same suit"
+    ),
     rarity: 1,
     synergies: [
       "Ancient Joker",
       "Arrowhead",
       "Bloodstone",
-      "Burnt Joker",
       "Castle",
       "Delayed Gratification",
       "Droll Joker",
@@ -877,151 +655,107 @@ export const jokerdata = {
       "Seeing Double",
       "The Tribe",
       "Troubadour",
-      "Walkie Talkie",
       "Wrathful Joker",
     ],
   },
   "Sixth Sense": {
     name: "Sixth Sense",
     description: parseDescription(
-      "If {{first hand|orange}} of round is a single {{6|orange}}, destroy it and create a {{Spectral|spectral}} card"),
+      "If {{first hand|orange}} of round is a single {{6|orange}}, destroy it and create a {{Spectral|spectral}} card"
+    ),
     rarity: 1,
-    synergies: ["Baseball Card", "Credit Card", "DNA", "Perkeo"],
+    synergies: ["DNA", "Perkeo"],
   },
   "Mad Joker": {
     name: "Mad Joker",
-    description: parseDescription( "{{+10|red}} Mult if played hand contains a {{Two Pair|orange}}"),
+    description: parseDescription(
+      "{{+10|red}} Mult if played hand contains a {{Two Pair|orange}}"
+    ),
     rarity: 0,
-    synergies: [
-      "Crazy Joker",
-      "Droll Joker",
-      "Jolly Joker",
-      "Spare Trousers",
-      "Square Joker",
-      "Walkie Talkie",
-      "Zany Joker",
-    ],
+    synergies: ["Jolly Joker", "Spare Trousers", "Square Joker"],
   },
   Bloodstone: {
     name: "Bloodstone",
     description: parseDescription(
-      "{{1 in 2|chance}} chance for played cards with {{Heart|heart}} suit to give {{X1.5|redBox}} Mult when scored"),
+      "{{1 in 2|chance}} chance for played cards with {{Heart|heart}} suit to give {{X1.5|redBox}} Mult when scored"
+    ),
     rarity: 1,
     synergies: [
-      "Arrowhead",
-      "Baseball Card",
-      "Business Card",
       "Droll Joker",
-      "Greedy Joker",
       "Hack",
-      "Hallucination",
       "Hanging Chad",
-      "Lucky Cat",
       "Lusty Joker",
-      "Onyx Agate",
       "Oops! All 6s",
-      "Red Card",
-      "Rough Gem",
       "Seance",
       "Smeared Joker",
       "Sock and Buskin",
-      "The Idol",
       "Triboulet",
-      "Wee Joker",
     ],
   },
   "Trading Card": {
     name: "Trading Card",
     description: parseDescription(
-      "If first {{discard|orange}} of round has only {{1|orange}} card, destroy it and earn {{$3|orange}}"),
+      "If first {{discard|orange}} of round has only {{1|orange}} card, destroy it and earn {{$3|orange}}"
+    ),
     rarity: 1,
-    synergies: [
-      "Canio",
-      "Castle",
-      "Drunkard",
-      "Erosion",
-      "Glass Joker",
-      "Hack",
-      "Merry Andy",
-      "Odd Todd",
-      "Ride the Bus",
-      "The Idol",
-      "Wee Joker",
-    ],
+    synergies: ["Canio", "Drunkard", "Erosion", "Glass Joker", "Merry Andy"],
   },
   Pareidolia: {
     name: "Pareidolia",
-    description: parseDescription( "All cards are considered {{face|orange}} cards	"),
+    description: parseDescription(
+      "All cards are considered {{face|orange}} cards	"
+    ),
     rarity: 1,
     synergies: [
       "Business Card",
       "Canio",
-      "Ceremonial Dagger",
-      "Chicot",
       "Faceless Joker",
-      "Glass Joker",
-      "Golden Ticket",
       "Luchador",
-      "Madness",
       "Midas Mask",
-      "Mr. Bones",
       "Photograph",
-      "Popcorn",
       "Reserved Parking",
-      "Ride the Bus",
-      "Rough Gem",
       "Scary Face",
       "Smiley Face",
       "Sock and Buskin",
-      "Splash",
-      "Vampire",
     ],
   },
   "The Tribe": {
     name: "The Tribe",
-    description: parseDescription( "{{X2|redBox}} Mult if played hand contains a {{Flush|orange}}"),
+    description: parseDescription(
+      "{{X2|redBox}} Mult if played hand contains a {{Flush|orange}}"
+    ),
     rarity: 2,
-    synergies: [
-      "Ancient Joker",
-      "Droll Joker",
-      "Four Fingers",
-      "Gluttonous Joker",
-      "Greedy Joker",
-      "Smeared Joker",
-      "Troubadour",
-    ],
+    synergies: ["Droll Joker", "Four Fingers", "Smeared Joker", "Troubadour"],
   },
   "Blue Joker": {
     name: "Blue Joker",
-    description: parseDescription( "{{+2|blue}} Chips for each remaining card in {{deck|orange}}"),
+    description: parseDescription(
+      "{{+2|blue}} Chips for each remaining card in {{deck|orange}}"
+    ),
     rarity: 0,
     synergies: ["DNA", "Green Joker", "Half Joker", "Ramen"],
   },
   Chicot: {
     name: "Chicot",
-    description: parseDescription( "Disables effect of every {{Boss Blind|orange}}"),
+    description: parseDescription(
+      "Disables effect of every {{Boss Blind|orange}}"
+    ),
     rarity: 3,
-    synergies: ["Canio", "Luchador", "Pareidolia", "Perkeo", "Triboulet"],
+    synergies: ["Pareidolia"],
   },
   "Burnt Joker": {
     name: "Burnt Joker",
     description: parseDescription(
-      "Upgrade the level of the first {{discarded|orange}} poker hand each round"),
+      "Upgrade the level of the first {{discarded|orange}} poker hand each round"
+    ),
     rarity: 2,
     synergies: [
-      "Ancient Joker",
       "Blueprint",
       "Brainstorm",
-      "Castle",
-      "Certificate",
       "Drunkard",
       "Four Fingers",
-      "Half Joker",
-      "Marble Joker",
       "Shortcut",
       "Smeared Joker",
-      "Space Joker",
-      "Steel Joker",
       "Supernova",
       "Wee Joker",
       "Yorick",
@@ -1029,7 +763,9 @@ export const jokerdata = {
   },
   Blueprint: {
     name: "Blueprint",
-    description: parseDescription( "Copies ability of {{Joker|orange}} to the right"),
+    description: parseDescription(
+      "Copies ability of {{Joker|orange}} to the right"
+    ),
     rarity: 2,
     synergies: [
       "8 Ball",
@@ -1064,79 +800,49 @@ export const jokerdata = {
   },
   Dusk: {
     name: "Dusk",
-    description: parseDescription( "Retrigger all played cards in {{final hand|orange}} of the round"),
+    description: parseDescription(
+      "Retrigger all played cards in {{final hand|orange}} of the round"
+    ),
     rarity: 1,
-    synergies: [
-      "Ancient Joker",
-      "Hack",
-      "Lucky Cat",
-      "Photograph",
-      "The Idol",
-      "Walkie Talkie",
-    ],
+    synergies: ["Hack", "Lucky Cat", "Photograph", "The Idol", "Walkie Talkie"],
   },
   "The Idol": {
     name: "The Idol",
     description: parseDescription(
-      "Each played {{[rank]|orange}} of {{[suit]|orange}} gives {{X2|redBox}} Mult when scored <br>{{Card changes every round|lgrey}}"),
+      "Each played {{[rank]|orange}} of {{[suit]|orange}} gives {{X2|redBox}} Mult when scored <br>{{Card changes every round|lgrey}}"
+    ),
     rarity: 1,
-    synergies: [
-      "Bloodstone",
-      "DNA",
-      "Dusk",
-      "Gluttonous Joker",
-      "Greedy Joker",
-      "Hack",
-      "Lusty Joker",
-      "Onyx Agate",
-      "Photograph",
-      "Sock and Buskin",
-      "Splash",
-      "Trading Card",
-      "Vagabond",
-    ],
+    synergies: ["Dusk", "Hack", "Lusty Joker", "Splash"],
   },
   Joker: {
     name: "Joker",
-    description: parseDescription( "{{+4|red}} Mult"),
+    description: parseDescription("{{+4|red}} Mult"),
     rarity: 0,
-    synergies: [
-      "Credit Card",
-      "Faceless Joker",
-      "Golden Joker",
-      "Steel Joker",
-      "Wee Joker",
-    ],
+    synergies: [],
   },
   "Greedy Joker": {
     name: "Greedy Joker",
     description: parseDescription(
-      "Played cards with {{Diamond|diamond}} suit give {{+3|red}} Mult when scored"),
+      "Played cards with {{Diamond|diamond}} suit give {{+3|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
-      "Ancient Joker",
-      "Bloodstone",
-      "Cartomancer",
-      "Castle",
       "Droll Joker",
-      "Gluttonous Joker",
       "Hack",
-      "Lusty Joker",
       "Rough Gem",
       "Smeared Joker",
       "Sock and Buskin",
       "Splash",
-      "Steel Joker",
       "Superposition",
       "The Family",
-      "The Idol",
       "The Tribe",
-      "Wrathful Joker",
     ],
   },
   "Steel Joker": {
     name: "Steel Joker",
-    description: parseDescription( "Gives {{X0.2|redBox}} Mult for each {{Steel Card|orange}} in your full deck"),
+    description: parseDescription(
+      "Gives {{X0.2|redBox}} Mult for each {{Steel Card|orange}} in your full deck"
+    ),
     rarity: 1,
     synergies: [
       "Burnt Joker",
@@ -1164,7 +870,9 @@ export const jokerdata = {
   },
   Matador: {
     name: "Matador",
-    description: parseDescription( "Earn {{$8|gold}} if played hand triggers the {{Boss Blind|orange}} ability"),
+    description: parseDescription(
+      "Earn {{$8|gold}} if played hand triggers the {{Boss Blind|orange}} ability"
+    ),
     rarity: 0,
     synergies: [
       "Bootstraps",
@@ -1179,21 +887,24 @@ export const jokerdata = {
   "To the Moon": {
     name: "To the Moon",
     description: parseDescription(
-      "Earn an extra {{$1|gold}} of {{interest|orange}} for every {{$5|gold}} you have at end of round"),
+      "Earn an extra {{$1|gold}} of {{interest|orange}} for every {{$5|gold}} you have at end of round"
+    ),
     rarity: 1,
     synergies: ["Baseball Card", "Bootstraps", "Golden Joker", "Matador"],
   },
   "Seeing Double": {
     name: "Seeing Double",
     description: parseDescription(
-      "{{X2|redBox}} Mult if played hand has a scoring Club suit icon Club card and a scoring card of any other {{suit|orange}}"),
+      "{{X2|redBox}} Mult if played hand has a scoring Club suit icon Club card and a scoring card of any other {{suit|orange}}"
+    ),
     rarity: 1,
     synergies: ["Flower Pot", "Smeared Joker", "Splash", "Walkie Talkie"],
   },
   Shortcut: {
     name: "Shortcut",
     description: parseDescription(
-      "Allows {{Straights|orange}} to be made with gaps of {{1 rank|orange}} {{(ex:|lgrey}} {{10 8 6 5 3|orange}}{{)|lgrey}}"),
+      "Allows {{Straights|orange}} to be made with gaps of {{1 rank|orange}} {{(ex:|lgrey}} {{10 8 6 5 3|orange}}{{)|lgrey}}"
+    ),
     rarity: 1,
     synergies: [
       "Baseball Card",
@@ -1212,7 +923,9 @@ export const jokerdata = {
   },
   Triboulet: {
     name: "Triboulet",
-    description: parseDescription( "Played {{Kings|orange}} and {{Queens|orange}} each give {{X2|redBox}} Mult when scored"),
+    description: parseDescription(
+      "Played {{Kings|orange}} and {{Queens|orange}} each give {{X2|redBox}} Mult when scored"
+    ),
     rarity: 3,
     synergies: [
       "Bloodstone",
@@ -1229,7 +942,9 @@ export const jokerdata = {
   },
   "Clever Joker": {
     name: "Clever Joker",
-    description: parseDescription( "{{+80|blue}} Chips if played hand contains a {{Two Pair|orange}}"),
+    description: parseDescription(
+      "{{+80|blue}} Chips if played hand contains a {{Two Pair|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Jolly Joker",
@@ -1241,7 +956,9 @@ export const jokerdata = {
   },
   Fibonacci: {
     name: "Fibonacci",
-    description: parseDescription( "Each played {{Ace|orange}}, {{2|orange}}, {{3|orange}}, {{5|orange}}, or {{8|orange}} gives {{+8|red}} Mult when scored"),
+    description: parseDescription(
+      "Each played {{Ace|orange}}, {{2|orange}}, {{3|orange}}, {{5|orange}}, or {{8|orange}} gives {{+8|red}} Mult when scored"
+    ),
     rarity: 1,
     synergies: [
       "Certificate",
@@ -1255,7 +972,9 @@ export const jokerdata = {
   },
   Troubadour: {
     name: "Troubadour",
-    description: parseDescription( "{{+2|orange}} hand size, <br>{{-1|red}} hand per round"),
+    description: parseDescription(
+      "{{+2|orange}} hand size, <br>{{-1|red}} hand per round"
+    ),
     rarity: 1,
     synergies: [
       "Baron",
@@ -1271,7 +990,9 @@ export const jokerdata = {
   },
   "Sly Joker": {
     name: "Sly Joker",
-    description: parseDescription( "{{+50|blue}} Chips if played hand contains a {{Pair|orange}}"),
+    description: parseDescription(
+      "{{+50|blue}} Chips if played hand contains a {{Pair|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Half Joker",
@@ -1283,13 +1004,17 @@ export const jokerdata = {
   },
   Swashbuckler: {
     name: "Swashbuckler",
-    description: parseDescription( "Adds the sell value of all other owned {{Jokers|orange}} to Mult"),
+    description: parseDescription(
+      "Adds the sell value of all other owned {{Jokers|orange}} to Mult"
+    ),
     rarity: 0,
     synergies: ["Egg", "Gift Card"],
   },
   Constellation: {
     name: "Constellation",
-    description: parseDescription( "This Joker gains {{X0.1|redBox}} Mult every time a {{Planet|planet}} card is used"),
+    description: parseDescription(
+      "This Joker gains {{X0.1|redBox}} Mult every time a {{Planet|planet}} card is used"
+    ),
     rarity: 1,
     synergies: [
       "Ancient Joker",
@@ -1305,13 +1030,17 @@ export const jokerdata = {
   },
   Egg: {
     name: "Egg",
-    description: parseDescription( "Gains {{$3|gold}} of {{sell value|orange}} at end of round"),
+    description: parseDescription(
+      "Gains {{$3|gold}} of {{sell value|orange}} at end of round"
+    ),
     rarity: 0,
     synergies: ["Blueprint", "Brainstorm", "Ceremonial Dagger", "Swashbuckler"],
   },
   Ramen: {
     name: "Ramen",
-    description: parseDescription( "{{X2|redBox}} Mult, <br>loses {{X0.01|redBox}} Mult per {{card|orange}} discarded"),
+    description: parseDescription(
+      "{{X2|redBox}} Mult, <br>loses {{X0.01|redBox}} Mult per {{card|orange}} discarded"
+    ),
     rarity: 1,
     synergies: [
       "Abstract Joker",
@@ -1334,7 +1063,8 @@ export const jokerdata = {
   Blackboard: {
     name: "Blackboard",
     description: parseDescription(
-      "{{X3|redBox}} Mult if all cards held in hand are {{Spades|spade}} or {{Clubs|club}}"),
+      "{{X3|redBox}} Mult if all cards held in hand are {{Spades|spade}} or {{Clubs|club}}"
+    ),
     rarity: 1,
     synergies: [
       "Baseball Card",
@@ -1347,7 +1077,8 @@ export const jokerdata = {
   "Gluttonous Joker": {
     name: "Gluttonous Joker",
     description: parseDescription(
-      "Played cards with {{Club|club}} suit give {{+3|red}} Mult when scored"),
+      "Played cards with {{Club|club}} suit give {{+3|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -1366,7 +1097,8 @@ export const jokerdata = {
   DNA: {
     name: "DNA",
     description: parseDescription(
-      "If {{first hand|orange}} of round has only {{1|orange}} card, add a permanent copy to deck and draw it to {{hand|orange}}"),
+      "If {{first hand|orange}} of round has only {{1|orange}} card, add a permanent copy to deck and draw it to {{hand|orange}}"
+    ),
     rarity: 2,
     synergies: [
       "8 Ball",
@@ -1396,7 +1128,9 @@ export const jokerdata = {
   },
   "Golden Ticket": {
     name: "Golden Ticket",
-    description: parseDescription( "Played {{Gold|gold}} cards earn {{$4|gold}} when scored"),
+    description: parseDescription(
+      "Played {{Gold|gold}} cards earn {{$4|gold}} when scored"
+    ),
     rarity: 0,
     synergies: [
       "Cartomancer",
@@ -1410,13 +1144,17 @@ export const jokerdata = {
   },
   "Diet Cola": {
     name: "Diet Cola",
-    description: parseDescription( "Sell this card to create a free {{Double Tag|orange}}"),
+    description: parseDescription(
+      "Sell this card to create a free {{Double Tag|orange}}"
+    ),
     rarity: 1,
     synergies: ["Luchador"],
   },
   Vagabond: {
     name: "Vagabond",
-    description: parseDescription( "Create a {{Tarot|tarot}} card if hand is played with {{$4|gold}} or less"),
+    description: parseDescription(
+      "Create a {{Tarot|tarot}} card if hand is played with {{$4|gold}} or less"
+    ),
     rarity: 2,
     synergies: [
       "Burglar",
@@ -1431,7 +1169,8 @@ export const jokerdata = {
   Vampire: {
     name: "Vampire",
     description: parseDescription(
-      "This Joker gains {{X0.1|redBox}} Mult per scoring {{Enhanced card|orange}} played, removes card {{Enhancement|orange}}"),
+      "This Joker gains {{X0.1|redBox}} Mult per scoring {{Enhanced card|orange}} played, removes card {{Enhancement|orange}}"
+    ),
     rarity: 1,
     synergies: [
       "Certificate",
@@ -1447,13 +1186,15 @@ export const jokerdata = {
   },
   Acrobat: {
     name: "Acrobat",
-    description: parseDescription( "{{X3|redBox}} Mult on {{final hand|orange}} of round"),
+    description: parseDescription(
+      "{{X3|redBox}} Mult on {{final hand|orange}} of round"
+    ),
     rarity: 1,
     synergies: ["Ancient Joker", "Blueprint", "Green Joker", "Loyalty Card"],
   },
   "Credit Card": {
     name: "Credit Card",
-    description: parseDescription( "Go up to {{-$20|red}} in debt"),
+    description: parseDescription("Go up to {{-$20|red}} in debt"),
     rarity: 0,
     synergies: [
       "Credit Card",
@@ -1467,7 +1208,8 @@ export const jokerdata = {
   "Business Card": {
     name: "Business Card",
     description: parseDescription(
-      "Played {{face|orange}} cards have a {{1 in 2|chance}} chance to give {{$2|gold}} when scored"),
+      "Played {{face|orange}} cards have a {{1 in 2|chance}} chance to give {{$2|gold}} when scored"
+    ),
     rarity: 0,
     synergies: [
       "Bloodstone",
@@ -1489,7 +1231,9 @@ export const jokerdata = {
   },
   "The Order": {
     name: "The Order",
-    description: parseDescription( "{{X3|redBox}} Mult if played hand contains a {{Straight|orange}}"),
+    description: parseDescription(
+      "{{X3|redBox}} Mult if played hand contains a {{Straight|orange}}"
+    ),
     rarity: 2,
     synergies: [
       "Crazy Joker",
@@ -1501,13 +1245,17 @@ export const jokerdata = {
   },
   Popcorn: {
     name: "Popcorn",
-    description: parseDescription( "{{+20|red}} Mult <br>{{-4|red}} Mult per round played"),
+    description: parseDescription(
+      "{{+20|red}} Mult <br>{{-4|red}} Mult per round played"
+    ),
     rarity: 0,
     synergies: ["Ice Cream", "Pareidolia", "Ramen", "Turtle Bean"],
   },
   "Cloud 9": {
     name: "Cloud 9",
-    description: parseDescription( "Earn {{$1|gold}} for each {{9|orange}} in your {{full deck|orange}} at end of round"),
+    description: parseDescription(
+      "Earn {{$1|gold}} for each {{9|orange}} in your {{full deck|orange}} at end of round"
+    ),
     rarity: 1,
     synergies: [
       "Baseball Card",
@@ -1526,7 +1274,9 @@ export const jokerdata = {
   },
   "Green Joker": {
     name: "Green Joker",
-    description: parseDescription( "{{+1|red}} Mult per hand played <br>{{-1|red}} Mult per discard"),
+    description: parseDescription(
+      "{{+1|red}} Mult per hand played <br>{{-1|red}} Mult per discard"
+    ),
     rarity: 0,
     synergies: [
       "Acrobat",
@@ -1552,7 +1302,9 @@ export const jokerdata = {
   },
   "Crafty Joker": {
     name: "Crafty Joker",
-    description: parseDescription( "{{+80|blue}} Chips if played hand contains a {{Flush|orange}}"),
+    description: parseDescription(
+      "{{+80|blue}} Chips if played hand contains a {{Flush|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Droll Joker",
@@ -1566,14 +1318,16 @@ export const jokerdata = {
   "Mr. Bones": {
     name: "Mr. Bones",
     description: parseDescription(
-      "Prevents Death if chips scored are at least {{25%|orange}} of required chips <br>{{self destructs|red}}"),
+      "Prevents Death if chips scored are at least {{25%|orange}} of required chips <br>{{self destructs|red}}"
+    ),
     rarity: 1,
     synergies: ["Blueprint", "Brainstorm", "Pareidolia", "Showman"],
   },
   "Ceremonial Dagger": {
     name: "Ceremonial Dagger",
     description: parseDescription(
-      "When {{Blind|orange}} is selected, destroy Joker to the right and permanently add {{double|orange}} its sell value to this {{Mult|red}}"),
+      "When {{Blind|orange}} is selected, destroy Joker to the right and permanently add {{double|orange}} its sell value to this {{Mult|red}}"
+    ),
     rarity: 1,
     synergies: [
       "Abstract Joker",
@@ -1586,7 +1340,7 @@ export const jokerdata = {
   },
   "Sock and Buskin": {
     name: "Sock and Buskin",
-    description: parseDescription( "Retrigger all played {{face|orange}} cards"),
+    description: parseDescription("Retrigger all played {{face|orange}} cards"),
     rarity: 1,
     synergies: [
       "Ancient Joker",
@@ -1607,7 +1361,9 @@ export const jokerdata = {
   },
   "Four Fingers": {
     name: "Four Fingers",
-    description: parseDescription( "All {{Flushes|orange}} and {{Straights|orange}} can be made with {{4|orange}} cards"),
+    description: parseDescription(
+      "All {{Flushes|orange}} and {{Straights|orange}} can be made with {{4|orange}} cards"
+    ),
     rarity: 1,
     synergies: [
       "Blackboard",
@@ -1627,7 +1383,9 @@ export const jokerdata = {
   },
   "Merry Andy": {
     name: "Merry Andy",
-    description: parseDescription( "{{+3|red}} discards each round, <br>{{-1|red}} hand size"),
+    description: parseDescription(
+      "{{+3|red}} discards each round, <br>{{-1|red}} hand size"
+    ),
     rarity: 1,
     synergies: [
       "Banner",
@@ -1645,20 +1403,25 @@ export const jokerdata = {
   },
   "Invisible Joker": {
     name: "Invisible Joker",
-    description: parseDescription( "After 2 rounds, sell this card to {{duplicate|orange}} a random Joker"),
+    description: parseDescription(
+      "After 2 rounds, sell this card to {{duplicate|orange}} a random Joker"
+    ),
     rarity: 2,
     synergies: ["Luchador", "Showman"],
   },
   "Mystic Summit": {
     name: "Mystic Summit",
-    description: parseDescription( "{{+15|red}} Mult when {{0|orange}} discards remaining"),
+    description: parseDescription(
+      "{{+15|red}} Mult when {{0|orange}} discards remaining"
+    ),
     rarity: 0,
     synergies: ["Burglar", "Jolly Joker", "Yorick"],
   },
   "Ancient Joker": {
     name: "Ancient Joker",
     description: parseDescription(
-      "Each played card with {{[suit]|orange}} gives {{X1.5|redBox}} Mult when scored, <br>{{suit changes at end of round|lgrey}}"),
+      "Each played card with {{[suit]|orange}} gives {{X1.5|redBox}} Mult when scored, <br>{{suit changes at end of round|lgrey}}"
+    ),
     rarity: 2,
     synergies: [
       "Acrobat",
@@ -1689,7 +1452,9 @@ export const jokerdata = {
   },
   Burglar: {
     name: "Burglar",
-    description: parseDescription( "When {{Blind|orange}} is selected, gain {{+3|orange}} Hands and {{lose all discards|orange}}"),
+    description: parseDescription(
+      "When {{Blind|orange}} is selected, gain {{+3|orange}} Hands and {{lose all discards|orange}}"
+    ),
     rarity: 1,
     synergies: [
       "Blueprint",
@@ -1715,7 +1480,9 @@ export const jokerdata = {
   },
   "Zany Joker": {
     name: "Zany Joker",
-    description: parseDescription( "{{+12|red}} Mult if played hand contains a {{Three of a Kind|orange}}"),
+    description: parseDescription(
+      "{{+12|red}} Mult if played hand contains a {{Three of a Kind|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Crazy Joker",
@@ -1729,7 +1496,8 @@ export const jokerdata = {
   Campfire: {
     name: "Campfire",
     description: parseDescription(
-      "This Joker gains {{X0.25|redBox}} Mult for each card {{sold|orange}}, resets when {{Boss Blind|orange}} is defeated"),
+      "This Joker gains {{X0.25|redBox}} Mult for each card {{sold|orange}}, resets when {{Boss Blind|orange}} is defeated"
+    ),
     rarity: 2,
     synergies: [
       "Astronomer",
@@ -1743,7 +1511,9 @@ export const jokerdata = {
   },
   Scholar: {
     name: "Scholar",
-    description: parseDescription( "Played {{Aces|orange}} give {{+20|blue}} Chips and {{+4|red}} Mult when scored"),
+    description: parseDescription(
+      "Played {{Aces|orange}} give {{+20|blue}} Chips and {{+4|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -1764,7 +1534,8 @@ export const jokerdata = {
   Castle: {
     name: "Castle",
     description: parseDescription(
-      "This Joker gains {{+3|blue}} Chips per discarded {{[suit]|orange}} card, suit changes every round"),
+      "This Joker gains {{+3|blue}} Chips per discarded {{[suit]|orange}} card, suit changes every round"
+    ),
     rarity: 1,
     synergies: [
       "Ancient Joker",
@@ -1784,14 +1555,17 @@ export const jokerdata = {
   },
   "Wily Joker": {
     name: "Wily Joker",
-    description: parseDescription( "{{+100|blue}} Chips if played hand contains a {{Three of a Kind|orange}}"),
+    description: parseDescription(
+      "{{+100|blue}} Chips if played hand contains a {{Three of a Kind|orange}}"
+    ),
     rarity: 0,
     synergies: ["Half Joker", "The Trio", "Walkie Talkie", "Zany Joker"],
   },
   "Even Steven": {
     name: "Even Steven",
     description: parseDescription(
-      "Played cards with {{even|orange}} rank give {{+4|red}} Mult when scored <br>{{(10, 8, 6, 4, 2)|lgrey}}"),
+      "Played cards with {{even|orange}} rank give {{+4|red}} Mult when scored <br>{{(10, 8, 6, 4, 2)|lgrey}}"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -1805,7 +1579,8 @@ export const jokerdata = {
   "Gift Card": {
     name: "Gift Card",
     description: parseDescription(
-      "Add {{1$|gold}} of {{sell value|orange}} to every {{Joker|orange}} and {{Consumable|orange}} card at end of round"),
+      "Add {{1$|gold}} of {{sell value|orange}} to every {{Joker|orange}} and {{Consumable|orange}} card at end of round"
+    ),
     rarity: 0,
     synergies: [
       "Cartomancer",
@@ -1818,13 +1593,15 @@ export const jokerdata = {
   },
   "Ice Cream": {
     name: "Ice Cream",
-    description: parseDescription( "{{+100|blue}} Chips {{-5|blue}} Chips for every hand played"),
+    description: parseDescription(
+      "{{+100|blue}} Chips {{-5|blue}} Chips for every hand played"
+    ),
     rarity: 0,
     synergies: ["Popcorn", "Throwback", "Turtle Bean", "Wee Joker"],
   },
   Drunkard: {
     name: "Drunkard",
-    description: parseDescription( "{{+1|red}} discard each round"),
+    description: parseDescription("{{+1|red}} discard each round"),
     rarity: 0,
     synergies: [
       "Banner",
@@ -1844,13 +1621,17 @@ export const jokerdata = {
   },
   "Joker Stencil": {
     name: "Joker Stencil",
-    description: parseDescription( "{{X1|redBox}} Mult for each empty {{Joker|orange}} slot. <br>Joker Stencil included"),
+    description: parseDescription(
+      "{{X1|redBox}} Mult for each empty {{Joker|orange}} slot. <br>Joker Stencil included"
+    ),
     rarity: 1,
     synergies: ["Certificate", "Seance"],
   },
   "Scary Face": {
     name: "Scary Face",
-    description: parseDescription( "Played {{face|orange}} cards give {{+30|blue}} Chips when scored"),
+    description: parseDescription(
+      "Played {{face|orange}} cards give {{+30|blue}} Chips when scored"
+    ),
     rarity: 0,
     synergies: [
       "Business Card",
@@ -1864,7 +1645,9 @@ export const jokerdata = {
   },
   "Shoot the Moon": {
     name: "Shoot the Moon",
-    description: parseDescription( "Each {{Queen|orange}} held in hand gives {{+13|red}} Mult"),
+    description: parseDescription(
+      "Each {{Queen|orange}} held in hand gives {{+13|red}} Mult"
+    ),
     rarity: 0,
     synergies: [
       "Baron",
@@ -1881,7 +1664,9 @@ export const jokerdata = {
   },
   "Baseball Card": {
     name: "Baseball Card",
-    description: parseDescription( "{{Uncommon|chance}} Jokers each give {{X1.5|redBox}} Mult"),
+    description: parseDescription(
+      "{{Uncommon|chance}} Jokers each give {{X1.5|redBox}} Mult"
+    ),
     rarity: 2,
     synergies: [
       "Blackboard",
@@ -1902,7 +1687,9 @@ export const jokerdata = {
   },
   "Square Joker": {
     name: "Square Joker",
-    description: parseDescription( "This Joker gains {{+4|blue}} Chips if played hand has exactly {{4|orange}} cards"),
+    description: parseDescription(
+      "This Joker gains {{+4|blue}} Chips if played hand has exactly {{4|orange}} cards"
+    ),
     rarity: 0,
     synergies: [
       "Burglar",
@@ -1920,7 +1707,9 @@ export const jokerdata = {
   },
   Yorick: {
     name: "Yorick",
-    description: parseDescription( "This Joker gains {{X1|redBox}} Mult every {{23|orange}} {{[23]|lgrey}} cards discarded"),
+    description: parseDescription(
+      "This Joker gains {{X1|redBox}} Mult every {{23|orange}} {{[23]|lgrey}} cards discarded"
+    ),
     rarity: 3,
     synergies: [
       "Burnt Joker",
@@ -1940,7 +1729,8 @@ export const jokerdata = {
   Perkeo: {
     name: "Perkeo",
     description: parseDescription(
-      "Creates a {{Negative|negative}} copy of {{1|orange}} random {{consumable|orange}} card in your possession at the end of the {{shop|orange}}"),
+      "Creates a {{Negative|negative}} copy of {{1|orange}} random {{consumable|orange}} card in your possession at the end of the {{shop|orange}}"
+    ),
     rarity: 3,
     synergies: [
       "8 Ball",
@@ -1965,24 +1755,25 @@ export const jokerdata = {
   },
   "Abstract Joker": {
     name: "Abstract Joker",
-    description: parseDescription( "{{+3|red}} Mult for each {{Joker|orange}} card"),
+    description: parseDescription(
+      "{{+3|red}} Mult for each {{Joker|orange}} card"
+    ),
     rarity: 0,
     synergies: ["Ceremonial Dagger", "Madness", "Ramen", "Riff-Raff"],
   },
   "The Trio": {
     name: "The Trio",
-    description: parseDescription( "{{X3|redBox}} Mult if played hand contains a {{Three of a Kind|orange}}"),
+    description: parseDescription(
+      "{{X3|redBox}} Mult if played hand contains a {{Three of a Kind|orange}}"
+    ),
     rarity: 2,
-    synergies: [
-      "Cloud 9",
-      "Half Joker",
-      "Walkie Talkie",
-      "Zany Joker",
-    ],
+    synergies: ["Cloud 9", "Half Joker", "Walkie Talkie", "Zany Joker"],
   },
   Bootstraps: {
     name: "Bootstraps",
-    description: parseDescription( "{{+2|red}} Mult for every {{$5|gold}} you have"),
+    description: parseDescription(
+      "{{+2|red}} Mult for every {{$5|gold}} you have"
+    ),
     rarity: 1,
     synergies: [
       "Bull",
@@ -1996,7 +1787,8 @@ export const jokerdata = {
   "Wrathful Joker": {
     name: "Wrathful Joker",
     description: parseDescription(
-      "Played cards with {{Spade|spade}} suit give {{+3|red}} Mult when scored"),
+      "Played cards with {{Spade|spade}} suit give {{+3|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Droll Joker",
@@ -2010,7 +1802,8 @@ export const jokerdata = {
   Hologram: {
     name: "Hologram",
     description: parseDescription(
-      "This Joker gains {{X0.25|redBox}} Mult every time a {{playing card|orange}} is added to your deck"),
+      "This Joker gains {{X0.25|redBox}} Mult every time a {{playing card|orange}} is added to your deck"
+    ),
     rarity: 1,
     synergies: [
       "Ancient Joker",
@@ -2029,7 +1822,8 @@ export const jokerdata = {
   Arrowhead: {
     name: "Arrowhead",
     description: parseDescription(
-      "Played cards with {{Spade|spade}} suit give {{+50|blue}} Chips when scored"),
+      "Played cards with {{Spade|spade}} suit give {{+50|blue}} Chips when scored"
+    ),
     rarity: 1,
     synergies: [
       "Bloodstone",
@@ -2043,7 +1837,7 @@ export const jokerdata = {
   },
   Juggler: {
     name: "Juggler",
-    description: parseDescription( "{{+1|orange}} hand size"),
+    description: parseDescription("{{+1|orange}} hand size"),
     rarity: 0,
     synergies: [
       "Baron",
@@ -2062,14 +1856,16 @@ export const jokerdata = {
   "Driver's License": {
     name: "Driver's License",
     description: parseDescription(
-      "{{X3|redBox}} Mult if you have at least {{16|orange}} Enhanced cards in your full deck"),
+      "{{X3|redBox}} Mult if you have at least {{16|orange}} Enhanced cards in your full deck"
+    ),
     rarity: 2,
     synergies: [],
   },
   "Glass Joker": {
     name: "Glass Joker",
     description: parseDescription(
-      "This Joker gains {{X0.75|redBox}} Mult for every {{Glass Card|orange}} that is destroyed"),
+      "This Joker gains {{X0.75|redBox}} Mult for every {{Glass Card|orange}} that is destroyed"
+    ),
     rarity: 1,
     synergies: [
       "Baseball Card",
@@ -2093,7 +1889,8 @@ export const jokerdata = {
   "Ride the Bus": {
     name: "Ride the Bus",
     description: parseDescription(
-      "This Joker gains {{+1|red}} Mult per consecutive hand played without a scoring {{face|orange}} card"),
+      "This Joker gains {{+1|red}} Mult per consecutive hand played without a scoring {{face|orange}} card"
+    ),
     rarity: 0,
     synergies: [
       "Burglar",
@@ -2114,7 +1911,9 @@ export const jokerdata = {
   },
   Luchador: {
     name: "Luchador",
-    description: parseDescription( "Sell this card to disable the current {{Boss Blind|orange}}"),
+    description: parseDescription(
+      "Sell this card to disable the current {{Boss Blind|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Baseball Card",
@@ -2132,13 +1931,16 @@ export const jokerdata = {
   "Raised Fist": {
     name: "Raised Fist",
     description: parseDescription(
-      "Adds {{double|orange}} the rank of {{lowest|orange}} ranked card held in hand to Mult"),
+      "Adds {{double|orange}} the rank of {{lowest|orange}} ranked card held in hand to Mult"
+    ),
     rarity: 0,
     synergies: ["Baron", "Certificate", "Half Joker", "Mime", "Stuntman"],
   },
   "Walkie Talkie": {
     name: "Walkie Talkie",
-    description: parseDescription( "Each played {{10|orange}} or {{4|orange}} gives {{+10|blue}} Chips and {{+4|red}} Mult when scored"),
+    description: parseDescription(
+      "Each played {{10|orange}} or {{4|orange}} gives {{+10|blue}} Chips and {{+4|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -2168,13 +1970,15 @@ export const jokerdata = {
   },
   Misprint: {
     name: "Misprint",
-    description: parseDescription( "{{+0|red}}-{{+23|red}} Mult"),
+    description: parseDescription("{{+0|red}}-{{+23|red}} Mult"),
     rarity: 0,
     synergies: [],
   },
   Banner: {
     name: "Banner",
-    description: parseDescription( "{{+30|blue}} Chips for each remaining {{discard|orange}}"),
+    description: parseDescription(
+      "{{+30|blue}} Chips for each remaining {{discard|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Castle",
@@ -2189,7 +1993,8 @@ export const jokerdata = {
   Hallucination: {
     name: "Hallucination",
     description: parseDescription(
-      "{{1 in 2|chance}} chance to create a {{Tarot|tarot}} card when any {{Booster Pack|orange}} is opened"),
+      "{{1 in 2|chance}} chance to create a {{Tarot|tarot}} card when any {{Booster Pack|orange}} is opened"
+    ),
     rarity: 0,
     synergies: [
       "Bloodstone",
@@ -2201,7 +2006,9 @@ export const jokerdata = {
   },
   "Turtle Bean": {
     name: "Turtle Bean",
-    description: parseDescription( "{{+5|orange}} hand size, <br>reduces by {{1|red}} each round"),
+    description: parseDescription(
+      "{{+5|orange}} hand size, <br>reduces by {{1|red}} each round"
+    ),
     rarity: 1,
     synergies: [
       "Half Joker",
@@ -2218,13 +2025,16 @@ export const jokerdata = {
   Erosion: {
     name: "Erosion",
     description: parseDescription(
-      "{{+4|red}} Mult for each card below {{[the deck's starting size]|orange}} in your full deck"),
+      "{{+4|red}} Mult for each card below {{[the deck's starting size]|orange}} in your full deck"
+    ),
     rarity: 1,
     synergies: ["Canio", "Glass Joker", "Seance", "Trading Card"],
   },
   Seltzer: {
     name: "Seltzer",
-    description: parseDescription( "Retrigger all cards played for the next {{10|orange}} hands"),
+    description: parseDescription(
+      "Retrigger all cards played for the next {{10|orange}} hands"
+    ),
     rarity: 1,
     synergies: [
       "Ancient Joker",
@@ -2238,7 +2048,8 @@ export const jokerdata = {
   Superposition: {
     name: "Superposition",
     description: parseDescription(
-      "Create a {{Tarot|tarot}} card if poker hand contains an {{Ace|orange}} and a {{Straight|orange}} {{(Must have room)|lgrey}}"),
+      "Create a {{Tarot|tarot}} card if poker hand contains an {{Ace|orange}} and a {{Straight|orange}} {{(Must have room)|lgrey}}"
+    ),
     rarity: 0,
     synergies: [
       "Crazy Joker",
@@ -2254,7 +2065,9 @@ export const jokerdata = {
   },
   "Half Joker": {
     name: "Half Joker",
-    description: parseDescription( "{{+20|red}} Mult if played hand contains {{3|red}} or fewer cards."),
+    description: parseDescription(
+      "{{+20|red}} Mult if played hand contains {{3|red}} or fewer cards."
+    ),
     rarity: 0,
     synergies: [
       "Baron",
@@ -2288,7 +2101,8 @@ export const jokerdata = {
   "Lusty Joker": {
     name: "Lusty Joker",
     description: parseDescription(
-      "Played cards with {{Heart|heart}} suit give {{+3|red}} Mult when scored"),
+      "Played cards with {{Heart|heart}} suit give {{+3|red}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -2305,7 +2119,9 @@ export const jokerdata = {
   },
   Splash: {
     name: "Splash",
-    description: parseDescription( "Every {{played card|orange}} counts in scoring"),
+    description: parseDescription(
+      "Every {{played card|orange}} counts in scoring"
+    ),
     rarity: 0,
     synergies: [
       "Burglar",
@@ -2329,13 +2145,17 @@ export const jokerdata = {
   },
   "Mail-In Rebate": {
     name: "Mail-In Rebate",
-    description: parseDescription( "Earn {{$5|gold}} for each discarded {{[rank]|orange}}, <br>rank changes every round"),
+    description: parseDescription(
+      "Earn {{$5|gold}} for each discarded {{[rank]|orange}}, <br>rank changes every round"
+    ),
     rarity: 0,
     synergies: ["Drunkard", "Yorick"],
   },
   Photograph: {
     name: "Photograph",
-    description: parseDescription( "First played {{face|orange}} card gives {{X2|redBox}} Mult when scored"),
+    description: parseDescription(
+      "First played {{face|orange}} card gives {{X2|redBox}} Mult when scored"
+    ),
     rarity: 0,
     synergies: [
       "Ancient Joker",
@@ -2356,7 +2176,8 @@ export const jokerdata = {
   Supernova: {
     name: "Supernova",
     description: parseDescription(
-      "Adds the number of times {{poker hand|orange}} has been played this run to Mult"),
+      "Adds the number of times {{poker hand|orange}} has been played this run to Mult"
+    ),
     rarity: 0,
     synergies: [
       "Burglar",
@@ -2373,17 +2194,17 @@ export const jokerdata = {
   },
   "The Duo": {
     name: "The Duo",
-    description: parseDescription( "{{X2|redBox}} Mult if played hand contains a {{Pair|orange}}"),
+    description: parseDescription(
+      "{{X2|redBox}} Mult if played hand contains a {{Pair|orange}}"
+    ),
     rarity: 2,
-    synergies: [
-      "Half Joker",
-      "Jolly Joker",
-      "Walkie Talkie",
-    ],
+    synergies: ["Half Joker", "Jolly Joker", "Walkie Talkie"],
   },
   "Droll Joker": {
     name: "Droll Joker",
-    description: parseDescription( "{{+10|red}} Mult if played hand contains a {{Flush|orange}}"),
+    description: parseDescription(
+      "{{+10|red}} Mult if played hand contains a {{Flush|orange}}"
+    ),
     rarity: 0,
     synergies: [
       "Arrowhead",
@@ -2406,7 +2227,8 @@ export const jokerdata = {
   Certificate: {
     name: "Certificate",
     description: parseDescription(
-      "When round begins, add a random {{playing card|orange}} with a random {{seal|orange}} to your hand"),
+      "When round begins, add a random {{playing card|orange}} with a random {{seal|orange}} to your hand"
+    ),
     rarity: 1,
     synergies: [
       "Arrowhead",
@@ -2441,7 +2263,8 @@ export const jokerdata = {
   "Faceless Joker": {
     name: "Faceless Joker",
     description: parseDescription(
-      "Earn {{$5|gold}} if {{3|orange}} or more {{face cards|orange}} are discarded at the same time"),
+      "Earn {{$5|gold}} if {{3|orange}} or more {{face cards|orange}} are discarded at the same time"
+    ),
     rarity: 0,
     synergies: [
       "Blueprint",
@@ -2456,14 +2279,16 @@ export const jokerdata = {
   Obelisk: {
     name: "Obelisk",
     description: parseDescription(
-      "This Joker gains {{X0.2|redBox}} Mult per consecutive hand played without playing your most played {{poker hand|orange}}"),
+      "This Joker gains {{X0.2|redBox}} Mult per consecutive hand played without playing your most played {{poker hand|orange}}"
+    ),
     rarity: 2,
     synergies: ["Cartomancer", "Constellation", "Madness", "Spare Trousers"],
   },
   "Rough Gem": {
     name: "Rough Gem",
     description: parseDescription(
-      "Played cards with {{Diamond|diamond}} suit earn {{$1|gold}} when scored"),
+      "Played cards with {{Diamond|diamond}} suit earn {{$1|gold}} when scored"
+    ),
     rarity: 1,
     synergies: [
       "Arrowhead",
@@ -2477,7 +2302,9 @@ export const jokerdata = {
   },
   Hiker: {
     name: "Hiker",
-    description: parseDescription( "Every played {{card|orange}} permanently gains {{+5|blue}} Chips when scored"),
+    description: parseDescription(
+      "Every played {{card|orange}} permanently gains {{+5|blue}} Chips when scored"
+    ),
     rarity: 1,
     synergies: ["Hack", "Splash"],
   },
