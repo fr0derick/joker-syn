@@ -7,7 +7,6 @@ import { jokerdata } from "../JokerData";
 const Home = () => {
   const [currentJokers, setCurrentJokers] = useState([]);
   const [nextId, setNextId] = useState(0);
-  const [jokerColors, setJokerColors] = useState(new Map());
   const [searchQuery, setSearchQuery] = useState("");
   const [allJokersPage, setAllJokersPage] = useState(1);
   const [synergeticJokersPage, setSynergeticJokersPage] = useState(1);
@@ -18,19 +17,13 @@ const Home = () => {
       id: nextId,
       name: jokerName,
     };
-    const newColors = new Map(jokerColors);
-    newColors.set(nextId, nextId);
     setCurrentJokers([...currentJokers, newJoker]);
-    setJokerColors(newColors);
     setNextId(nextId + 1);
     setSynergeticJokersPage(1);
   };
 
   const removeJoker = (jokerId) => {
     setCurrentJokers(currentJokers.filter((joker) => joker.id !== jokerId));
-    const newColors = new Map(jokerColors);
-    newColors.delete(jokerId);
-    setJokerColors(newColors);
     setSynergeticJokersPage(1);
   };
 
@@ -45,24 +38,29 @@ const Home = () => {
     jokerId = null
   ) => {
     const dots = new Set();
+
     currentJokers.forEach((currentJoker) => {
       if (isCurrentJoker) {
         if (jokerId === currentJoker.id) {
-          dots.add(currentJoker.id);
+          dots.add(currentJoker.name);
         } else if (
           jokerdata[jokerName].synergies?.includes(currentJoker.name)
         ) {
-          dots.add(currentJoker.id);
+          dots.add(currentJoker.name);
         }
-      } else if (jokerdata[currentJoker.name].synergies?.includes(jokerName)) {
-        dots.add(currentJoker.id);
+      } else {
+        if (jokerdata[currentJoker.name].synergies?.includes(jokerName)) {
+          dots.add(currentJoker.name);
+        }
       }
     });
+
     return Array.from(dots);
   };
 
   const getSynergeticJokers = () => {
     const synergeticMap = new Map();
+
     currentJokers.forEach((currentJoker) => {
       const synergies = jokerdata[currentJoker.name].synergies || [];
       synergies.forEach((synergyJoker) => {
@@ -70,6 +68,7 @@ const Home = () => {
         synergeticMap.set(synergyJoker, synergyCount + 1);
       });
     });
+
     return Array.from(synergeticMap.entries())
       .sort((a, b) => b[1] - a[1])
       .map(([jokerName]) => jokerName);
