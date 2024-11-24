@@ -71,9 +71,10 @@ const JokerInfo = ({
               <div className="relative">
                 <div className="absolute inset-0 bg-balatro-whiteshadow pixel-corners-small translate-y-1" />
                 <div className="bg-white text-balatro-black font-thin px-2 py-1 pixel-corners-small relative mb-2">
-                  <p className="text-base text-center leading-4">
-                    {joker.description}
-                  </p>
+                  <p
+                    className="text-base text-center leading-4"
+                    dangerouslySetInnerHTML={{ __html: joker.description }}
+                  />
                 </div>
               </div>
               <div className="relative mx-8 mt-3">
