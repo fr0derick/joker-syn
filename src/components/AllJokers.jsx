@@ -1,7 +1,7 @@
 import React from "react";
 import Joker from "./Joker";
 import { jokerdata } from "../JokerData";
-import PageSelector from "./PageSelector.jsx";
+import PageSelector from "./PageSelector";
 import JokerGrid from "./JokerGrid";
 
 const AllJokers = ({
@@ -24,39 +24,49 @@ const AllJokers = ({
 
   return (
     <div className="relative">
-      <div className="absolute inset-0 bg-balatro-lightgrey pixel-corners -m-1" />
-      <div className="w-full h-[750px] p-4 bg-balatro-grey pixel-corners relative">
-        <h2 className="text-3xl mb-2 text-center">All Jokers</h2>
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search jokers..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 bg-balatro-black pixel-corners-small text-white placeholder-balatro-grey"
-          />
-        </div>
-        <div className="bg-balatro-black shadow-cardholder pixel-corners p-2 h-[558px] relative">
-          <div
-            className="absolute inset-0 mt-7"
-            style={{ overflow: "visible" }}
-          >
-            <JokerGrid cols={4} ySpacing={175}>
-              {displayedJokers.map((jokerName) => (
-                <Joker
-                  key={jokerName}
-                  name={jokerName}
-                  onClick={() => onJokerClick(jokerName)}
-                />
-              ))}
-            </JokerGrid>
+      <div className="absolute inset-0 bg-balatro-lightgreyshadow pixel-corners translate-y-1" />
+      <div className="relative">
+        <div className="bg-balatro-lightgrey pixel-corners p-1">
+          <div className="w-full p-4 bg-balatro-grey pixel-corners relative">
+            <h2 className="text-2xl -mt-2 mb-1 text-center tracking-widest">
+              Add Jokers
+            </h2>
+            <div className="mb-4 relative">
+              <div className="absolute inset-0 tracking-wide bg-balatro-blackshadow pixel-corners-small translate-y-1" />
+              <input
+                type="text"
+                placeholder="Search jokers..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full p-2 bg-balatro-black pixel-corners-small tarcking-widest text-white placeholder-balatro-lightgrey relative"
+              />
+            </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-balatro-blackshadow pixel-corners translate-y-1" />
+              <div className="bg-balatro-black h-[545px] pixel-corners p-2 relative overflow-visible">
+                <div className="relative mt-2 overflow-visible">
+                  <JokerGrid cols={4} ySpacing={175}>
+                    {displayedJokers.map((jokerName) => (
+                      <Joker
+                        key={jokerName}
+                        name={jokerName}
+                        onClick={() => onJokerClick(jokerName)}
+                        renderInfoTop={true}
+                      />
+                    ))}
+                  </JokerGrid>
+                </div>
+              </div>
+            </div>
+            <div className="-mb-4">
+              <PageSelector
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
           </div>
         </div>
-        <PageSelector
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
       </div>
     </div>
   );

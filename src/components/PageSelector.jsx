@@ -9,7 +9,7 @@ const PageSelector = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-2">
+    <div className="flex items-center justify-center gap-2 mt-4">
       <motion.button
         onClick={() => handlePageChange(currentPage - 1)}
         className="w-8 h-10 flex items-center justify-center hover:bg-balatro-redshadow bg-balatro-red pixel-corners-small shadow-red text-lg cursor-pointer text-white"
