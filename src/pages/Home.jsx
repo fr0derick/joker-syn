@@ -1,3 +1,5 @@
+// Home.jsx
+
 import React, { useState } from "react";
 import CurrentJokers from "../components/CurrentJokers";
 import AllJokers from "../components/AllJokers";
@@ -61,11 +63,15 @@ const Home = () => {
   const getSynergeticJokers = () => {
     const synergeticMap = new Map();
 
+    const currentJokerNames = new Set(currentJokers.map((joker) => joker.name));
+
     currentJokers.forEach((currentJoker) => {
       const synergies = jokerdata[currentJoker.name].synergies || [];
       synergies.forEach((synergyJoker) => {
-        const synergyCount = synergeticMap.get(synergyJoker) || 0;
-        synergeticMap.set(synergyJoker, synergyCount + 1);
+        if (!currentJokerNames.has(synergyJoker)) {
+          const synergyCount = synergeticMap.get(synergyJoker) || 0;
+          synergeticMap.set(synergyJoker, synergyCount + 1);
+        }
       });
     });
 
