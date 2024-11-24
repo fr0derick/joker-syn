@@ -75,7 +75,8 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen font-game flex flex-col items-center pt-8 text-white text-shadow-pixel">
+    <div className="min-h-screen font-game flex flex-col items-center text-white text-shadow-pixel">
+      <h1 className="text-4xl mt-4 mb-2">Joker Synergy Finder</h1>
       <div className="w-full max-w-7xl mb-4">
         <CurrentJokers
           jokers={currentJokers}
