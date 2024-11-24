@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
   const childArray = React.Children.toArray(children);
-
   const rows = childArray.reduce((acc, child, index) => {
     const rowIndex = Math.floor(index / cols);
     if (!acc[rowIndex]) acc[rowIndex] = [];
@@ -12,14 +11,7 @@ const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
   }, []);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        overflow: "visible",
-      }}
-    >
+    <div style={{ position: "relative", overflow: "visible" }}>
       {rows.map((row, rowIndex) => (
         <div
           key={rowIndex}
@@ -27,6 +19,7 @@ const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
             position: "relative",
             height: `${ySpacing}px`,
             width: "100%",
+            overflow: "visible",
           }}
         >
           <AnimatePresence mode="wait">
@@ -36,9 +29,7 @@ const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
               const centerCol = (cols - 1) / 2;
               const distanceFromCenter = col - centerCol;
               const isRightSide = distanceFromCenter > 0;
-
               const finalRotation = distanceFromCenter * 4;
-
               const finalPosition = col * 25;
               const rowCenterPosition = 50;
               const moveDistance = finalPosition - rowCenterPosition;
@@ -55,8 +46,8 @@ const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    zIndex: 1000 + index,
                     transformOrigin: "center center",
+                    overflow: "visible",
                   }}
                   initial={{
                     x: -moveDistance * 4,
@@ -94,7 +85,7 @@ const JokerGrid = ({ children, cols = 4, ySpacing = 160 }) => {
                     },
                   }}
                 >
-                  {child}
+                  {React.cloneElement(child, { rotation: finalRotation })}
                 </motion.div>
               );
             })}

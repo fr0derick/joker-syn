@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import SynergyDots from "./SynergyDots";
+import JokerInfo from "./JokerInfo";
 
-const Joker = ({
-  name,
-  onClick,
-  synergies = [],
-  isCurrentJoker = false,
-  jokerId = null,
-}) => {
+const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
   const [imageError, setImageError] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [position, setPosition] = useState(null);
+  const cardRef = useRef(null);
+
+  const updatePosition = useCallback(() => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      setPosition({
+        x: rect.left + rect.width / 2,
+        y: renderInfoTop ? rect.top : rect.bottom,
+      });
+    }
+  }, [renderInfoTop]);
+
+  useEffect(() => {
+    if (isHovering) {
+      updatePosition();
+      window.addEventListener("scroll", updatePosition);
+      window.addEventListener("resize", updatePosition);
+
+      return () => {
+        window.removeEventListener("scroll", updatePosition);
+        window.removeEventListener("resize", updatePosition);
+      };
+    }
+  }, [isHovering, updatePosition]);
+
   const imageName = name.replace(/\s+/g, "_");
   const imagePath = `/images/jokers/${imageName}.png`;
 
@@ -42,77 +63,99 @@ const Joker = ({
   };
 
   return (
-    <motion.div
-      className="cursor-pointer w-32"
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-      variants={variants}
-      onHoverStart={() => setIsHovering(true)}
-      onHoverEnd={() => setIsHovering(false)}
-      style={{
-        transformStyle: "preserve-3d",
-        perspective: "1000px",
-        position: "relative",
-        zIndex: isHovering ? 1100 : 1000,
-      }}
-    >
-      <Tilt
-        className="w-full h-full"
-        tiltEnable={true}
-        tiltMaxAngleX={20}
-        tiltMaxAngleY={20}
-        perspective={1000}
-        scale={isHovering ? 1.05 : 1}
-        transitionSpeed={200}
-        tiltReverse={true}
-        trackOnWindow={false}
-        gyroscope={false}
-        glareEnable={true}
-        glareMaxOpacity={0.15}
-        glareColor="#ffffff"
-        glarePosition="all"
-        glareBorderRadius="8px"
+    <>
+      <motion.div
+        ref={cardRef}
+        className="cursor-pointer w-32 select-none"
+        initial="initial"
+        animate="animate"
+        whileHover="hover"
+        variants={variants}
+        onHoverStart={() => setIsHovering(true)}
+        onHoverEnd={() => setIsHovering(false)}
+        style={{
+          transformStyle: "preserve-3d",
+          perspective: "1000px",
+          position: "relative",
+          zIndex: isHovering ? 50 : 1,
+          WebkitUserDrag: "none",
+          userDrag: "none",
+          WebkitTouchCallout: "none",
+        }}
       >
-        <div
-          className="rounded-lg shadow-lg"
-          style={{
-            transformStyle: "preserve-3d",
-            isolation: "isolate",
-            position: "relative",
-          }}
+        <Tilt
+          className="w-full h-full"
+          tiltEnable={true}
+          tiltMaxAngleX={20}
+          tiltMaxAngleY={20}
+          perspective={1000}
+          scale={isHovering ? 1.05 : 1}
+          transitionSpeed={200}
+          tiltReverse={true}
+          trackOnWindow={false}
+          gyroscope={false}
+          glareEnable={true}
+          glareMaxOpacity={0.15}
+          glareColor="#ffffff"
+          glarePosition="all"
+          glareBorderRadius="8px"
         >
-          {!imageError ? (
-            <img
-              src={imagePath}
-              alt={name}
-              className="w-full h-full object-cover pixelated"
-              onError={() => setImageError(true)}
-              onClick={onClick}
-            />
-          ) : (
-            <div
-              className="w-full h-full flex items-center justify-center"
-              onClick={onClick}
-            >
-              {name}
-            </div>
-          )}
           <div
-            className="absolute inset-0 pointer-events-none"
+            className="rounded-lg shadow-2xl select-none"
             style={{
-              boxShadow: "inset 0 0 30px rgba(0,0,0,0.25)",
-              borderRadius: "8px",
+              transformStyle: "preserve-3d",
+              isolation: "isolate",
+              position: "relative",
+              WebkitUserDrag: "none",
+              userDrag: "none",
+              WebkitTouchCallout: "none",
             }}
-          />
-        </div>
-      </Tilt>
-      {Array.isArray(synergies) && synergies.length > 0 && (
-        <div style={{ position: "relative", zIndex: isHovering ? 1101 : 1001 }}>
-          <SynergyDots colorIds={synergies} />
-        </div>
-      )}
-    </motion.div>
+          >
+            {!imageError ? (
+              <img
+                src={imagePath}
+                alt={name}
+                className="w-full h-full object-cover pixelated select-none"
+                draggable="false"
+                onError={() => setImageError(true)}
+                onClick={onClick}
+                style={{
+                  WebkitUserDrag: "none",
+                  userDrag: "none",
+                  WebkitTouchCallout: "none",
+                }}
+                onDragStart={(e) => e.preventDefault()}
+              />
+            ) : (
+              <div
+                className="w-full h-full flex items-center justify-center select-none"
+                onClick={onClick}
+              >
+                {name}
+              </div>
+            )}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                boxShadow: "inset 0 0 30px rgba(0,0,0,0.25)",
+                borderRadius: "8px",
+              }}
+            />
+          </div>
+        </Tilt>
+        {Array.isArray(synergies) && synergies.length > 0 && (
+          <div style={{ position: "relative" }}>
+            <SynergyDots colorIds={synergies} />
+          </div>
+        )}
+      </motion.div>
+      <JokerInfo
+        jokerName={name}
+        renderTop={renderInfoTop}
+        show={isHovering}
+        position={position}
+      />
+    </>
   );
 };
 
