@@ -30,7 +30,7 @@ const styleMapping = {
 
 const parseDescription = (text) => {
   return text.replace(
-    /\{\{([\w\s().,+:\-%<>|[\]$#@!*]+)\|(\w+)\}\}/g,
+    /\{\{([\w\s().,+:\-%<>|[\]'$#@!*]+)\|(\w+)\}\}/g,
     (match, content, styleKey) => {
       const style = styleMapping[styleKey];
       if (style) {
