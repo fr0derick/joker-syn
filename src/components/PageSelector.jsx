@@ -2,12 +2,20 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const PageSelector = ({ currentPage, totalPages, onPageChange }) => {
+  const handlePageChange = (newPage) => {
+    if (newPage === currentPage) return;
+    if (newPage < 1 || newPage > totalPages) return;
+    onPageChange(newPage);
+  };
+
   return (
     <div className="flex items-center justify-center gap-2 mt-2">
       <motion.button
-        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+        onClick={() => handlePageChange(currentPage - 1)}
         className="w-8 h-10 flex items-center justify-center hover:bg-balatro-redshadow bg-balatro-red pixel-corners-small shadow-red text-lg cursor-pointer text-white"
-        disabled={currentPage === 1}
+        disabled={currentPage <= 1}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
         {"<"}
       </motion.button>
@@ -15,9 +23,11 @@ const PageSelector = ({ currentPage, totalPages, onPageChange }) => {
         Page {currentPage}/{totalPages}
       </div>
       <motion.button
-        onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+        onClick={() => handlePageChange(currentPage + 1)}
         className="w-8 h-10 flex items-center justify-center hover:bg-balatro-redshadow bg-balatro-red pixel-corners-small shadow-red text-lg cursor-pointer text-white"
-        disabled={currentPage === totalPages}
+        disabled={currentPage >= totalPages}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
         {">"}
       </motion.button>

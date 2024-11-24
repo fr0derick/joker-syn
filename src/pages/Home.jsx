@@ -23,6 +23,7 @@ const Home = () => {
     setCurrentJokers([...currentJokers, newJoker]);
     setJokerColors(newColors);
     setNextId(nextId + 1);
+    setSynergeticJokersPage(1);
   };
 
   const removeJoker = (jokerId) => {
@@ -30,6 +31,12 @@ const Home = () => {
     const newColors = new Map(jokerColors);
     newColors.delete(jokerId);
     setJokerColors(newColors);
+    setSynergeticJokersPage(1);
+  };
+
+  const handleSearchQueryChange = (newQuery) => {
+    setSearchQuery(newQuery);
+    setAllJokersPage(1);
   };
 
   const getSynergyDots = (
@@ -82,7 +89,7 @@ const Home = () => {
           <AllJokers
             onJokerClick={addJoker}
             searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={handleSearchQueryChange}
             currentPage={allJokersPage}
             setCurrentPage={setAllJokersPage}
             itemsPerPage={itemsPerPage}

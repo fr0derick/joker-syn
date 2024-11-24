@@ -18,6 +18,9 @@ const SynergeticJokers = ({
     startIndex + itemsPerPage
   );
 
+  const displayCurrentPage = synergeticJokers.length === 0 ? 0 : currentPage;
+  const displayTotalPages = synergeticJokers.length === 0 ? 0 : totalPages;
+
   return (
     <div className="relative">
       <div className="absolute inset-0 bg-balatro-lightgrey pixel-corners -m-1" />
@@ -47,8 +50,8 @@ const SynergeticJokers = ({
           )}
         </div>
         <PageSelector
-          currentPage={currentPage}
-          totalPages={totalPages}
+          currentPage={displayCurrentPage}
+          totalPages={displayTotalPages}
           onPageChange={setCurrentPage}
         />
       </div>

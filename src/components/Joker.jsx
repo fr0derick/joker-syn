@@ -18,11 +18,11 @@ const Joker = ({
   const variants = {
     initial: {},
     animate: {
-      rotateX: [0, 2.5, 0, -2.5, 0],
-      rotateY: [0, -2.5, 0, 2.5, 0],
-      rotate: [0, 1, 0, -1, 0],
+      rotateX: [0, 5, 0, -5, 0],
+      rotateY: [0, -5, 0, 5, 0],
+      rotate: [0, 2, 0, -2, 0],
       transition: {
-        duration: 5 + Math.random() * 2,
+        duration: 3 + Math.random() * 2,
         ease: "easeInOut",
         repeat: Infinity,
         delay: Math.random() * 2,
