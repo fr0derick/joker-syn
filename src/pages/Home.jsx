@@ -1,5 +1,3 @@
-// Home.jsx
-
 import React, { useState } from "react";
 import CurrentJokers from "../components/CurrentJokers";
 import AllJokers from "../components/AllJokers";

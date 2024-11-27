@@ -44,18 +44,24 @@ const AllJokers = ({
             <div className="relative">
               <div className="absolute inset-0 bg-balatro-blackshadow pixel-corners translate-y-1" />
               <div className="bg-balatro-black h-[601px] pixel-corners p-2 relative overflow-visible">
-                <div className="relative mt-2 overflow-visible">
-                  <JokerGrid cols={4} ySpacing={200}>
-                    {displayedJokers.map((jokerName) => (
-                      <Joker
-                        key={jokerName}
-                        name={jokerName}
-                        onClick={() => onJokerClick(jokerName)}
-                        renderInfoTop={true}
-                      />
-                    ))}
-                  </JokerGrid>
-                </div>
+                {filteredJokers.length === 0 ? (
+                  <div className="col-span-4 text-center my-10 text-2xl opacity-50">
+                    No jokers match your search
+                  </div>
+                ) : (
+                  <div className="relative mt-2 overflow-visible">
+                    <JokerGrid cols={4} ySpacing={200}>
+                      {displayedJokers.map((jokerName) => (
+                        <Joker
+                          key={jokerName}
+                          name={jokerName}
+                          onClick={() => onJokerClick(jokerName)}
+                          renderInfoTop={true}
+                        />
+                      ))}
+                    </JokerGrid>
+                  </div>
+                )}
               </div>
             </div>
             <div className="-mb-4">

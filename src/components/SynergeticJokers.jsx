@@ -1,5 +1,3 @@
-// SynergeticJokers.jsx
-
 import React from "react";
 import Joker from "./Joker";
 import PageSelector from "./PageSelector";
@@ -54,7 +52,7 @@ const SynergeticJokers = ({
               <div className="absolute inset-0 bg-balatro-blackshadow pixel-corners translate-y-1" />
               <div className="bg-balatro-black pixel-corners p-2 relative h-[601px] overflow-visible">
                 {displayedJokers.length === 0 ? (
-                  <div className="col-span-4 text-center my-5 text-2xl opacity-50">
+                  <div className="col-span-4 text-center my-10 text-2xl opacity-50">
                     {synergeticJokers.length === 0
                       ? "Add jokers to see synergies"
                       : "No jokers match your search"}
