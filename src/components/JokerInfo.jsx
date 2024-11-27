@@ -77,7 +77,7 @@ const JokerInfo = ({
                   />
                 </div>
               </div>
-              <div className="relative mx-8 mt-3">
+              <div className="relative mx-7 mt-3">
                 <div
                   className={`absolute inset-0 ${rarityStyles.shadow} pixel-corners-small translate-y-1`}
                 />

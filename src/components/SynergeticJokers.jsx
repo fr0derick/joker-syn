@@ -1,3 +1,5 @@
+// SynergeticJokers.jsx
+
 import React from "react";
 import Joker from "./Joker";
 import PageSelector from "./PageSelector";
@@ -10,15 +12,24 @@ const SynergeticJokers = ({
   currentPage,
   setCurrentPage,
   itemsPerPage,
+  synergySearchQuery,
+  setSynergySearchQuery,
 }) => {
-  const totalPages = Math.ceil(synergeticJokers.length / itemsPerPage);
+  const filteredSynergeticJokers = synergeticJokers.filter((jokerName) =>
+    jokerName.toLowerCase().includes(synergySearchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredSynergeticJokers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const displayedJokers = synergeticJokers.slice(
+  const displayedJokers = filteredSynergeticJokers.slice(
     startIndex,
     startIndex + itemsPerPage
   );
-  const displayCurrentPage = synergeticJokers.length === 0 ? 0 : currentPage;
-  const displayTotalPages = synergeticJokers.length === 0 ? 0 : totalPages;
+
+  const displayCurrentPage =
+    filteredSynergeticJokers.length === 0 ? 0 : currentPage;
+  const displayTotalPages =
+    filteredSynergeticJokers.length === 0 ? 0 : totalPages;
 
   return (
     <div className="relative">
@@ -29,12 +40,24 @@ const SynergeticJokers = ({
             <h2 className="text-2xl -mt-2 mb-1 text-center tracking-widest">
               Synergetic Jokers
             </h2>
+            <div className="mb-4 relative">
+              <div className="absolute inset-0 tracking-wide bg-balatro-blackshadow pixel-corners-small translate-y-1" />
+              <input
+                type="text"
+                placeholder="Search synergetic jokers..."
+                value={synergySearchQuery}
+                onChange={(e) => setSynergySearchQuery(e.target.value)}
+                className="w-full p-2 bg-balatro-black pixel-corners-small tarcking-widest text-white placeholder-balatro-lightgrey relative"
+              />
+            </div>
             <div className="relative">
               <div className="absolute inset-0 bg-balatro-blackshadow pixel-corners translate-y-1" />
               <div className="bg-balatro-black pixel-corners p-2 relative h-[601px] overflow-visible">
                 {displayedJokers.length === 0 ? (
-                  <div className="col-span-4 text-center my-20 text-2xl opacity-50">
-                    Add jokers to see synergies
+                  <div className="col-span-4 text-center my-5 text-2xl opacity-50">
+                    {synergeticJokers.length === 0
+                      ? "Add jokers to see synergies"
+                      : "No jokers match your search"}
                   </div>
                 ) : (
                   <div className="relative mt-4 overflow-visible">

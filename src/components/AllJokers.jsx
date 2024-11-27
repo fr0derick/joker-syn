@@ -43,9 +43,9 @@ const AllJokers = ({
             </div>
             <div className="relative">
               <div className="absolute inset-0 bg-balatro-blackshadow pixel-corners translate-y-1" />
-              <div className="bg-balatro-black h-[545px] pixel-corners p-2 relative overflow-visible">
+              <div className="bg-balatro-black h-[601px] pixel-corners p-2 relative overflow-visible">
                 <div className="relative mt-2 overflow-visible">
-                  <JokerGrid cols={4} ySpacing={175}>
+                  <JokerGrid cols={4} ySpacing={200}>
                     {displayedJokers.map((jokerName) => (
                       <Joker
                         key={jokerName}

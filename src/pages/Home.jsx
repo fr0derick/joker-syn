@@ -10,6 +10,7 @@ const Home = () => {
   const [currentJokers, setCurrentJokers] = useState([]);
   const [nextId, setNextId] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [synergySearchQuery, setSynergySearchQuery] = useState("");
   const [allJokersPage, setAllJokersPage] = useState(1);
   const [synergeticJokersPage, setSynergeticJokersPage] = useState(1);
   const itemsPerPage = 12;
@@ -32,6 +33,11 @@ const Home = () => {
   const handleSearchQueryChange = (newQuery) => {
     setSearchQuery(newQuery);
     setAllJokersPage(1);
+  };
+
+  const handleSynergySearchQueryChange = (newQuery) => {
+    setSynergySearchQuery(newQuery);
+    setSynergeticJokersPage(1);
   };
 
   const getSynergyDots = (
@@ -109,6 +115,8 @@ const Home = () => {
             currentPage={synergeticJokersPage}
             setCurrentPage={setSynergeticJokersPage}
             itemsPerPage={itemsPerPage}
+            synergySearchQuery={synergySearchQuery}
+            setSynergySearchQuery={handleSynergySearchQueryChange}
           />
         </div>
       </div>
