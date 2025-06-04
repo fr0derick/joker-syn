@@ -45,7 +45,7 @@ const SynergeticJokers = ({
                 placeholder="Search synergetic jokers..."
                 value={synergySearchQuery}
                 onChange={(e) => setSynergySearchQuery(e.target.value)}
-                className="w-full p-2 bg-balatro-black pixel-corners-small tarcking-widest text-white placeholder-balatro-lightgrey relative"
+                className="w-full p-2 bg-balatro-black pixel-corners-small tracking-widest text-white placeholder-balatro-lightgrey relative"
               />
             </div>
             <div className="relative">
