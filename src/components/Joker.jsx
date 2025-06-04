@@ -73,15 +73,28 @@ const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
 
   return (
     <>
-      <motion.div
-        ref={cardRef}
-        className="cursor-pointer w-32 select-none"
-        initial="initial"
-        animate="animate"
-        whileHover="hover"
-        variants={variants}
-        onHoverStart={() => setIsHovering(true)}
-        onHoverEnd={() => setIsHovering(false)}
+      <div className="relative w-32 select-none">
+        {!imageError && (
+          <img
+            src={imagePath}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            style={{
+              filter: "drop-shadow(0 6px 6px rgba(0,0,0,0.5))",
+              zIndex: 0,
+            }}
+          />
+        )}
+        <motion.div
+          ref={cardRef}
+          className="cursor-pointer w-full"
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+          variants={variants}
+          onHoverStart={() => setIsHovering(true)}
+          onHoverEnd={() => setIsHovering(false)}
         style={{
           transformStyle: "preserve-3d",
           perspective: "1000px",
@@ -92,12 +105,12 @@ const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
           WebkitTouchCallout: "none",
         }}
       >
-        <Tilt
-          className="w-full h-full"
-          tiltEnable={true}
-          tiltMaxAngleX={20}
-          tiltMaxAngleY={20}
-          perspective={1000}
+          <Tilt
+            className="w-full h-full"
+            tiltEnable={true}
+            tiltMaxAngleX={20}
+            tiltMaxAngleY={20}
+            perspective={1000}
           scale={isHovering ? 1.05 : 1}
           transitionSpeed={200}
           tiltReverse={true}
@@ -152,12 +165,13 @@ const Joker = ({ name, onClick, synergies = [], renderInfoTop = false }) => {
             />
           </div>
         </Tilt>
-        {Array.isArray(synergies) && synergies.length > 0 && (
-          <div style={{ position: "relative" }}>
-            <SynergyDots colorIds={synergies} />
-          </div>
-        )}
-      </motion.div>
+          {Array.isArray(synergies) && synergies.length > 0 && (
+            <div style={{ position: "relative" }}>
+              <SynergyDots colorIds={synergies} />
+            </div>
+          )}
+        </motion.div>
+      </div>
       <JokerInfo
         jokerName={name}
         renderTop={renderInfoTop}
